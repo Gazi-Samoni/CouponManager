@@ -1,4 +1,5 @@
 package DataAccessObjects;
+import java.sql.SQLException;
 import java.util.*;
 import java.sql.*;
 import JavaBeans.*;
@@ -27,7 +28,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public void updateCompany(Company company) {
 		
-		String query = "UPDATE `project.1`.`companies` SET (`ID`, `NAME`, `EMAIL`, `PASSWORD`) WHERE ('ID' = '" + company.get_id() + "');\r\n";
+		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.get_name() + "', EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);

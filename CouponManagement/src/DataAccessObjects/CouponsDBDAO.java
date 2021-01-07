@@ -1,8 +1,9 @@
 package DataAccessObjects;
+import java.sql.SQLException;
 import java.util.*;
-
-import ConnectionUtils.ConnectionPool;
+import java.sql.*;
 import JavaBeans.*;
+import ConnectionUtils.*;
 
 public class CouponsDBDAO implements CouponsDAO {
 	
