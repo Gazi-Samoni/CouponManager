@@ -16,7 +16,7 @@ public class ConnectionPool {
     	m_connections = new HashSet<Connection>();
     	
     	for(int i=0; i< 10 ; i++) {
-    		m_connections.add(SQLQueries.GetConnection()); 
+    		m_connections.add(SQLconnection.GetConnection()); 
  
     	}
     } 

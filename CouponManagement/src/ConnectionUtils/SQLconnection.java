@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class SQLQueries {
+public class SQLconnection {
 
 
 	//DB Driver Name and DB URL
