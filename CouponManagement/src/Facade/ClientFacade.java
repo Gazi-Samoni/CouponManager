@@ -2,9 +2,9 @@ package Facade;
 import DataAccessObjects.*;
 
 public abstract class ClientFacade {
-	CompaniesDAO m_companies;
-	CouponsDAO m_coupons;
-	CustomersDAO m_customers;
+	protected CompaniesDAO m_companies;
+	protected CouponsDAO m_coupons;
+	protected CustomersDAO m_customers;
 	
 	public ClientFacade()
 	{

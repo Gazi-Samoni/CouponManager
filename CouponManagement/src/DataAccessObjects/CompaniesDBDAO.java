@@ -26,9 +26,9 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		
 	}
 	
-	public void updateCompany(Company company) {
+	public void updateCompany(Company company) { // reverse name set
 		
-		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.get_name() + "', EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
+		String query = "UPDATE `project.1`.`companies` SET EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);

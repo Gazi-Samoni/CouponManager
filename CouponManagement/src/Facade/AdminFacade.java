@@ -6,7 +6,7 @@ import ConnectionUtils.*;
 
 
 public class AdminFacade extends ClientFacade {
-	ConnectionPool m_connetionPool = ConnectionPool.getInstance();
+	ConnectionPool m_connetionPool;
 	
 	public static void main(String[] args)
 	{
@@ -20,7 +20,7 @@ public class AdminFacade extends ClientFacade {
 	
 	public AdminFacade()
 	{
-		
+		m_connetionPool = ConnectionPool.getInstance();
 	}
 	@Override
 	public boolean login(String email, String password) {
@@ -45,12 +45,30 @@ public class AdminFacade extends ClientFacade {
 			System.out.println("added");
 		}
 	}
-	public void updateCompany(Company company)
+	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
 	{
-		this.m_companies.updateCompany(company);
+		Company tempCompany = this.m_companies.getOneCompany(company.get_id());
+		if(tempCompany != null)
+		{	
+			if(tempCompany.get_name() != company.get_name())
+			{
+				System.out.println("Can't change company`s name");
+			}
+			else
+			{
+				this.m_companies.updateCompany(company);
+			}
+			
+		}
+		else
+		{
+			System.out.println("Can't find " + company.get_id() + "this company in DB (you can't change company id");
+		}
 	}
 	public void deleteCompany(int companyID)
 	{
+		
+		
 		this.m_companies.deleteCompany(companyID);
 	}
 	public ArrayList<Company> getAllCompanies()
