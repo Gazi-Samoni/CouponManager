@@ -90,4 +90,8 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		
 		return result;
 	}
+	public boolean isEmailExists(String email)
+	{
+		return true;
+	}
 }

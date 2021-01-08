@@ -1,5 +1,5 @@
 package Facade;
 
-public class CompanyFacade {
+public class CompanyFacade extends ClientFacade {
 
 }
