@@ -24,8 +24,19 @@ public class ConnectionPool {
     // static method to create instance of Singleton class 
     public static ConnectionPool getInstance() 
     { 
-        if (m_connectionPool == null) 
+        if (m_connectionPool == null) {
+        	
+        	System.out.println("Connection to the mysql DB ....");
+        	
+        	try {
         	m_connectionPool = new ConnectionPool(); 
+        	} catch (Exception e) {
+        		e.getMessage();
+        	}
+        	
+        	
+        	System.out.println("Connected");
+        }
   
         return m_connectionPool; 
     } 

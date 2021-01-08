@@ -7,7 +7,7 @@ import ConnectionUtils.*;
 
 public class CompaniesDBDAO implements CompaniesDAO{
 	
-	private ConnectionPool m_connectionPool=null;
+	private ConnectionPool m_connectionPool = ConnectionPool.getInstance();
 	
 	public boolean isCompanyExists(String email, String password) {
 		return true;
@@ -74,24 +74,52 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		
 		String query = "SELECT * FROM `project.1`.`companies` WHERE ('ID' = '" + companyID + "') ;\r\n";
 		ResultSet companiesSet = null;
-		Company result = null;
+		Company Company = null;
 		
 		try {
 			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
 		
 		while(companiesSet.next())
 		{
-				result = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
+			Company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
 		}
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return result;
+		return Company;
 	}
 	public boolean isEmailExists(String email)
 	{
+		String query = "SELECT EMAIL FROM `project.1`.`companies` WHERE (`EMAIL` = '" + email + "') ;\r\n";
+		ResultSet companiesSet = null;
+		
+		try {
+			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(companiesSet.next() == false)
+			{
+				return false;
+			}
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		return true;
+	}
+	public boolean isNameExists(String name)
+	{
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (`NAME` = '" + name + "') ;\r\n";
+		ResultSet companiesSet = null;
+		
+		try {
+			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(companiesSet.next() == false)
+			{
+				return false;
+			}
+		} catch (SQLException e) {
+			e.getMessage();
+		}
 		return true;
 	}
 }

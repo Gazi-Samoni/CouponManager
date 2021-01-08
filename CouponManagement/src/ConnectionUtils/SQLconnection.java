@@ -25,7 +25,7 @@ public class SQLconnection {
 			Class.forName(JDBC_DRIVER);
 
 			//Create connection per the driver (JDBC_DRIVER)
-			System.out.println("Connection to the mysql DB ....");
+			
 			con = DriverManager.getConnection(DB_URL , user ,password);
 			
 		}

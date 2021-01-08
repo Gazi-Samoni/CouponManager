@@ -3,10 +3,19 @@ import java.util.ArrayList;
 
 import JavaBeans.*;
 import ConnectionUtils.*;
-import java.sql.Connection;
+
 
 public class AdminFacade extends ClientFacade {
-	ConnectionPool m_connetionPool;
+	ConnectionPool m_connetionPool = ConnectionPool.getInstance();
+	
+	public static void main(String[] args)
+	{
+		AdminFacade adminFacade = new AdminFacade();
+		System.out.println("Login" + adminFacade.login("admin@admin.com","admin"));
+		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
+		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
+	}
+	
 	public AdminFacade()
 	{
 		
@@ -20,12 +29,18 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void addCompany(Company company)
 	{
-		if(this.m_companies.isCompanyExists(company.get_email(), company.get_password()))
+		if(this.m_companies.isEmailExists(company.get_email()))
 		{
-			System.out.println("The Company already exists");
+			System.out.println("Company's email already exists");
 		}
-		else {
+		else if(this.m_companies.isNameExists(company.get_name()))
+		{
+			System.out.println("Company's name already exists");
+		}
+		else 
+		{
 			this.m_companies.addCompany(company);
+			System.out.println("added");
 		}
 	}
 	public void updateCompany(Company company)
