@@ -14,6 +14,8 @@ public class AdminFacade extends ClientFacade {
 		System.out.println("Login" + adminFacade.login("admin@admin.com","admin"));
 		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
 		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
+		
+		
 	}
 	
 	public AdminFacade()
