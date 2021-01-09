@@ -28,7 +28,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public void updateCompany(Company company) { // reverse name set
 		
-		String query = "UPDATE `project.1`.`companies` SET EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
+		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.get_name() +"', EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -121,5 +121,26 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			e.getMessage();
 		}
 		return true;
+	}
+	public Company getOneCompanyByName(String name)
+	{
+		String query = "SELECT * FROM `project.1`.`companies` WHERE ('NAME' = '" + name + "') ;\r\n";
+		ResultSet companiesSet = null;
+		Company Company = null;
+		
+		try {
+			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+		
+		while(companiesSet.next())
+		{
+			Company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
+		}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return Company;
+		
 	}
 }

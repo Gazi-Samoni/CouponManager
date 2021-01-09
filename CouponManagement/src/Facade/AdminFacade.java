@@ -1,4 +1,5 @@
 package Facade;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import JavaBeans.*;
@@ -48,7 +49,14 @@ public class AdminFacade extends ClientFacade {
 	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
 	{
 		Company tempCompany = this.m_companies.getOneCompany(company.get_id());
-		if(tempCompany != null)
+		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name());
+		
+		if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id() )
+		{
+			System.out.println("Invaild input: u can't edit company's name/id");
+			
+		}
+		else if(tempCompany != null)
 		{	
 			if(tempCompany.get_name() != company.get_name())
 			{
@@ -67,10 +75,36 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void deleteCompany(int companyID)
 	{
+		Company company = this.m_companies.getOneCompany(companyID);
+		ArrayList<Coupon> coupons = company.get_coupons();
+		deleteCoupons(coupons);
 		
+
 		
 		this.m_companies.deleteCompany(companyID);
 	}
+	private void deleteCoupons(ArrayList<Coupon> coupons) {
+		Coupon coupon;
+		
+		while(!coupons.isEmpty())
+		{
+			coupon = coupons.get(0);
+			deleteCouponsIDFromCustVsCoupon(coupon.getId());
+			this.m_coupons.deleteCoupon(coupon.getId());
+		}
+		
+	}
+
+	private void deleteCouponsIDFromCustVsCoupon(int CouponID) {
+		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+		try {
+			m_connetionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			e.getMessage();
+		}
+		
+	}
+
 	public ArrayList<Company> getAllCompanies()
 	{
 		return this.m_companies.getAllCompanies();
