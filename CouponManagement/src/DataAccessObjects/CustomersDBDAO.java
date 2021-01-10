@@ -7,7 +7,11 @@ import ConnectionUtils.*;
 
 public class CustomersDBDAO implements CustomersDAO {
 	
-	private ConnectionPool m_connectionPool=null;
+	private ConnectionPool m_connectionPool;
+	
+	public CustomersDBDAO() {
+		m_connectionPool = ConnectionPool.getInstance();
+	}
 	
 	public boolean isCustomerExists(String email, String password) {
 		return true;

@@ -7,7 +7,11 @@ import ConnectionUtils.*;
 
 public class CouponsDBDAO implements CouponsDAO {
 	
-	private ConnectionPool m_connectionPool=null;
+	private ConnectionPool m_connectionPool;
+	
+	public CouponsDBDAO() {
+		m_connectionPool = ConnectionPool.getInstance();
+	}
 	
 	public void addCoupon(Coupon coupon) {
 		

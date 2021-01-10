@@ -7,10 +7,19 @@ import ConnectionUtils.*;
 
 public class CompaniesDBDAO implements CompaniesDAO{
 	
-	private ConnectionPool m_connectionPool = ConnectionPool.getInstance();
+	private ConnectionPool m_connectionPool;
+	
+	public CompaniesDBDAO() {
+		m_connectionPool = ConnectionPool.getInstance();
+	}
 	
 	public boolean isCompanyExists(String email, String password) {
-		return true;
+		boolean isExist = true;
+		
+		String query = "SELECT * FROM `project.1`.`companies` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
+		ResultSet queryAnswerTable = ;
+		
+		return isExist;
 	}
 
 	public void addCompany(Company company) {
