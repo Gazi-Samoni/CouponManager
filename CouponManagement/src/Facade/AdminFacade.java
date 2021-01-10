@@ -7,7 +7,7 @@ import ConnectionUtils.*;
 
 
 public class AdminFacade extends ClientFacade {
-	ConnectionPool m_connetionPool;
+	ConnectionPool m_connectionPool;
 	
 	public static void main(String[] args)
 	{
@@ -21,7 +21,7 @@ public class AdminFacade extends ClientFacade {
 	
 	public AdminFacade()
 	{
-		m_connetionPool = ConnectionPool.getInstance();
+		m_connectionPool = ConnectionPool.getInstance();
 	}
 	@Override
 	public boolean login(String email, String password) {
@@ -51,12 +51,16 @@ public class AdminFacade extends ClientFacade {
 		Company tempCompany = this.m_companies.getOneCompany(company.get_id());
 		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name());
 		
-		if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id() )
+		if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id())
 		{
 			System.out.println("Invaild input: u can't edit company's name/id");
 			
 		}
-		else if(tempCompany != null)
+		else
+		{
+			this.m_companies.updateCompany(company);
+		}
+		/*else if(tempCompany != null)
 		{	
 			if(tempCompany.get_name() != company.get_name())
 			{
@@ -71,7 +75,7 @@ public class AdminFacade extends ClientFacade {
 		else
 		{
 			System.out.println("Can't find " + company.get_id() + "this company in DB (you can't change company id");
-		}
+		}*/
 	}
 	public void deleteCompany(int companyID)
 	{
@@ -91,6 +95,7 @@ public class AdminFacade extends ClientFacade {
 			coupon = coupons.get(0);
 			deleteCouponsIDFromCustVsCoupon(coupon.getId());
 			this.m_coupons.deleteCoupon(coupon.getId());
+			coupons.remove(0);
 		}
 		
 	}
@@ -98,9 +103,9 @@ public class AdminFacade extends ClientFacade {
 	private void deleteCouponsIDFromCustVsCoupon(int CouponID) {
 		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
 		try {
-			m_connetionPool.getConnection().createStatement().executeUpdate(query);
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		
 	}

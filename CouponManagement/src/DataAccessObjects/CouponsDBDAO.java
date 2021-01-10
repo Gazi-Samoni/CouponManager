@@ -17,15 +17,26 @@ public class CouponsDBDAO implements CouponsDAO {
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
 	public void updateCoupon(Coupon coupon) {
 		String query = "UPADTE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE ('ID' = '" + coupon.getId() + "');\r\n";
+		try {
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void deleteCoupon(int couponID) {
+		String query = "DELETE FROM `project.1`.`coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
+		try {
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
