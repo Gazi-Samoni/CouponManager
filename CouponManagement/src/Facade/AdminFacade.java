@@ -85,7 +85,6 @@ public class AdminFacade extends ClientFacade {
 			coupons.remove(0);
 		}	
 	}
-
 	private void deleteCouponFromCustomerHistory(int CouponID) {
 		String query = "SELECT FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
 		ResultSet customerVsCouponTable=null;
@@ -133,7 +132,6 @@ public class AdminFacade extends ClientFacade {
 		{
 			this.m_customers.addCustomer(customer);
 		}
-		
 	}
 	public void updateCustomer(Customer customer)
 	{
@@ -141,6 +139,12 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void deleteCustomer(int customerID)
 	{
+		ArrayList<Coupon> coupons = this.m_customers.getOneCustomer(customerID).getCoupons();
+		//detel
+		for(Coupon var:coupons)
+		{
+			this.m_coupons.deleteCopounPurchase(customerID, var.getId());
+		}
 		this.m_customers.deleteCustomer(customerID);
 	}
 	public ArrayList<Customer> getAllCustomer()
