@@ -21,7 +21,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}

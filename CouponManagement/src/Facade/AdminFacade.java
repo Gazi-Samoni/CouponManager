@@ -1,5 +1,5 @@
 package Facade;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 import JavaBeans.*;
@@ -101,12 +101,35 @@ public class AdminFacade extends ClientFacade {
 	}
 
 	private void deleteCouponsIDFromCustVsCoupon(int CouponID) {
-		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+		String query = "SELECT FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+		ResultSet custVsCoupon=null;
+		
 		try {
+			
+			custVsCoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			while(custVsCoupon.next())
+			{
+				int customerID = custVsCoupon.getInt(1);
+				ArrayList<Coupon> customerCoupons =  m_customers.getOneCustomer(customerID).getCoupons();
+				for(Coupon var :customerCoupons)
+				{
+					if(var.getId() == CouponID ) 
+					{
+						customerCoupons.remove(var);
+					}
+				}
+			}
+			
+			
+			query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+			
+		
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+
 		
 	}
 
