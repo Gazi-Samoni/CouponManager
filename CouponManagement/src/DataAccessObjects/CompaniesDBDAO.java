@@ -92,16 +92,19 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public Company getOneCompany(int companyID) {
 		
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ('ID' = '" + companyID + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = 23";
 		ResultSet companiesSet = null;
 		Company Company = null;
 		
 		try {
 			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
 		
+		System.out.println(companiesSet.getInt("ID"));
 		while(companiesSet.next())
 		{
-			Company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
+			System.out.println("innnn");
+			Company = new Company(companiesSet.getInt("ID"), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
+			System.out.println("in3333");
 		}
 		
 		} catch (SQLException e) {

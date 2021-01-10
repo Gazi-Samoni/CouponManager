@@ -8,18 +8,7 @@ import ConnectionUtils.*;
 
 public class AdminFacade extends ClientFacade {
 	
-	public static void main(String[] args)
-	{
-		AdminFacade adminFacade = new AdminFacade();
-		System.out.println("Login" + adminFacade.login("admin@admin.com","admin"));
-		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
-		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
-			
-	}
-	public AdminFacade()
-	{
-		
-	}
+	public AdminFacade(){}
 	
 	@Override
 	public boolean login(String email, String password) {
