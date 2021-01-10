@@ -7,7 +7,6 @@ import ConnectionUtils.*;
 
 
 public class AdminFacade extends ClientFacade {
-	ConnectionPool m_connectionPool;
 	
 	public static void main(String[] args)
 	{
@@ -15,14 +14,13 @@ public class AdminFacade extends ClientFacade {
 		System.out.println("Login" + adminFacade.login("admin@admin.com","admin"));
 		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
 		adminFacade.addCompany(new Company(1,"gazi","g@g.com","11"));
-		
+			
+	}
+	public AdminFacade()
+	{
 		
 	}
 	
-	public AdminFacade()
-	{
-		m_connectionPool = ConnectionPool.getInstance();
-	}
 	@Override
 	public boolean login(String email, String password) {
 		if(email.equals("admin@admin.com") && password.equals("admin"))
@@ -86,11 +84,14 @@ public class AdminFacade extends ClientFacade {
 		}	
 	}
 	private void deleteCouponFromCustomerHistory(int CouponID) {
-		String query = "SELECT FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
 		ResultSet customerVsCouponTable=null;
 		
+		String query;
+
 		try {	
-			customerVsCouponTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+			customerVsCouponTable = GetTableByID(CouponID,query);
+			
 			while(customerVsCouponTable.next())
 			{
 				int customerID = customerVsCouponTable.getInt(1);
@@ -105,7 +106,8 @@ public class AdminFacade extends ClientFacade {
 			}
 
 			//Delete from customers_vs_coupons table
-			query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+			query = "DELETE * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
+			executeQueryByID(CouponID,query);
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 
 		} 
@@ -140,7 +142,7 @@ public class AdminFacade extends ClientFacade {
 	public void deleteCustomer(int customerID)
 	{
 		ArrayList<Coupon> coupons = this.m_customers.getOneCustomer(customerID).getCoupons();
-		//detel
+		//delete from customer_vs_coupon table
 		for(Coupon var:coupons)
 		{
 			this.m_coupons.deleteCopounPurchase(customerID, var.getId());
