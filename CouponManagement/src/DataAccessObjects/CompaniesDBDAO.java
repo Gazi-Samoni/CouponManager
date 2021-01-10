@@ -33,7 +33,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -44,7 +44,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -64,7 +64,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 			
 		return companies;
@@ -85,7 +85,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return Company;
@@ -102,7 +102,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 				return false;
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		return true;
 	}
@@ -118,7 +118,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 				return false;
 			}
 		} catch (SQLException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 		return true;
 	}
@@ -137,7 +137,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return Company;
