@@ -9,4 +9,5 @@ public interface CustomersDAO {
 	public void deleteCustomer(int customerID);
 	public ArrayList<Customer> getAllCustomers();
 	public Customer getOneCustomer(int customerID);
+	public boolean isCustomerEmailExists(String email);
 }

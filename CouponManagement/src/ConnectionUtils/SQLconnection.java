@@ -18,14 +18,13 @@ public class SQLconnection {
 
 
 	public static Connection GetConnection() {
-		Connection con =null;
+		Connection con = null;
 		
 		try {
 			//register the JDBC driver 
 			Class.forName(JDBC_DRIVER);
 
 			//Create connection per the driver (JDBC_DRIVER)
-			
 			con = DriverManager.getConnection(DB_URL , user ,password);
 			
 		}
@@ -33,8 +32,7 @@ public class SQLconnection {
 			sqlex.printStackTrace();
 		} 
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		 return con;

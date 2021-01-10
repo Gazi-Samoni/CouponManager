@@ -51,65 +51,50 @@ public class AdminFacade extends ClientFacade {
 		Company tempCompany = this.m_companies.getOneCompany(company.get_id());
 		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name());
 		
-		if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id())
+		if(tempCompany== null || tempCompany2 == null)
 		{
-			System.out.println("Invaild input: u can't edit company's name/id");
-			
+			System.out.println("Invaild input");
 		}
-		else
+		else 
 		{
-			this.m_companies.updateCompany(company);
-		}
-		/*else if(tempCompany != null)
-		{	
-			if(tempCompany.get_name() != company.get_name())
+			if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id())
 			{
-				System.out.println("Can't change company`s name");
+				System.out.println("Invaild input: u can't edit company's name/id");
 			}
 			else
 			{
 				this.m_companies.updateCompany(company);
 			}
-			
 		}
-		else
-		{
-			System.out.println("Can't find " + company.get_id() + "this company in DB (you can't change company id");
-		}*/
 	}
 	public void deleteCompany(int companyID)
 	{
 		Company company = this.m_companies.getOneCompany(companyID);
 		ArrayList<Coupon> coupons = company.get_coupons();
-		deleteCoupons(coupons);
-		
-
-		
+		deleteCouponsHistory(coupons);
 		this.m_companies.deleteCompany(companyID);
 	}
-	private void deleteCoupons(ArrayList<Coupon> coupons) {
+	private void deleteCouponsHistory(ArrayList<Coupon> coupons) {
 		Coupon coupon;
 		
 		while(!coupons.isEmpty())
 		{
 			coupon = coupons.get(0);
-			deleteCouponsIDFromCustVsCoupon(coupon.getId());
+			deleteCouponFromCustomerHistory(coupon.getId());
 			this.m_coupons.deleteCoupon(coupon.getId());
 			coupons.remove(0);
-		}
-		
+		}	
 	}
 
-	private void deleteCouponsIDFromCustVsCoupon(int CouponID) {
+	private void deleteCouponFromCustomerHistory(int CouponID) {
 		String query = "SELECT FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
-		ResultSet custVsCoupon=null;
+		ResultSet customerVsCouponTable=null;
 		
-		try {
-			
-			custVsCoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
-			while(custVsCoupon.next())
+		try {	
+			customerVsCouponTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			while(customerVsCouponTable.next())
 			{
-				int customerID = custVsCoupon.getInt(1);
+				int customerID = customerVsCouponTable.getInt(1);
 				ArrayList<Coupon> customerCoupons =  m_customers.getOneCustomer(customerID).getCoupons();
 				for(Coupon var :customerCoupons)
 				{
@@ -119,18 +104,15 @@ public class AdminFacade extends ClientFacade {
 					}
 				}
 			}
-			
-			
+
+			//Delete from customers_vs_coupons table
 			query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
-			
-		
-			
-		} catch (SQLException e) {
+
+		} 
+		catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-
-		
 	}
 
 	public ArrayList<Company> getAllCompanies()
@@ -143,7 +125,15 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void addCustomer(Customer customer)
 	{
-		this.m_customers.addCustomer(customer);
+		if(m_customers.isCustomerEmailExists(customer.getEmail()))
+		{
+			System.out.println(customer.getEmail() + " already Exists");
+		}
+		else
+		{
+			this.m_customers.addCustomer(customer);
+		}
+		
 	}
 	public void updateCustomer(Customer customer)
 	{

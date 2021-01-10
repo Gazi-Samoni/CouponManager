@@ -14,10 +14,9 @@ public class ConnectionPool {
     private ConnectionPool() 
     {       
     	m_connections = new HashSet<Connection>();
-    	
+   
     	for(int i=0; i< 10 ; i++) {
     		m_connections.add(SQLconnection.GetConnection()); 
- 
     	}
     } 
   
@@ -33,8 +32,7 @@ public class ConnectionPool {
         	} catch (Exception e) {
         		e.getMessage();
         	}
-        	
-        	
+
         	System.out.println("Connected");
         }
   
@@ -42,14 +40,12 @@ public class ConnectionPool {
     } 
     
     public synchronized Connection getConnection() {
-
     	Connection connection = null;
     		
     	if(m_connections.isEmpty())
     	{
     		try {
     			wait();
-    			
     		}catch (InterruptedException e) {
     			System.out.println(e.getMessage());   
     		}
@@ -59,7 +55,6 @@ public class ConnectionPool {
     		m_connections.remove(connection);
     		// TODO: check if iterator.next removes the returned connection. 
     	}
-    	
     	return connection;
     }
 
@@ -71,14 +66,12 @@ public class ConnectionPool {
     
     void closeAllConnections() {
     	try {
-    		for (Connection var : m_connections) 
-    		{ 
+    		for (Connection var : m_connections) { 
     			var.close();
     		}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
     }
 }

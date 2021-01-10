@@ -64,7 +64,7 @@ public class CustomersDBDAO implements CustomersDAO {
 		}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 			
 		return costumers;
@@ -85,9 +85,26 @@ public class CustomersDBDAO implements CustomersDAO {
 		}
 		
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return result;
 	}
+	public boolean isCustomerEmailExists(String email)
+	{
+		String query = "SELECT * FROM `project.1`.`costumers` WHERE ('ID' = '" + email + "') ;\r\n";
+		ResultSet costumersSet = null;
+		boolean isExist = false;
+		try {
+			costumersSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(costumersSet.next() == false)
+			{
+				isExist = true;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return isExist;
+	}
+	
 }
