@@ -1,5 +1,4 @@
 package DataAccessObjects;
-import java.sql.SQLException;
 import java.util.*;
 import java.sql.*;
 import JavaBeans.*;
@@ -105,8 +104,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		}
 	}
 	
-	public ResultSet getCustomerVsCouponTable(Coupon couponID) {
-		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
+	public ResultSet GetTableByID(int couponID,String query) {
 		ResultSet customerVScoupon = null;
 		try {
 			customerVScoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
@@ -115,6 +113,14 @@ public class CouponsDBDAO implements CouponsDAO {
 		}
 		
 		return customerVScoupon;
+	}
+	public void executeQueryByID(int couponID,String query)
+	{
+		try {
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

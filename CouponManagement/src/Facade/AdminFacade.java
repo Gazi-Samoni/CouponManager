@@ -90,7 +90,7 @@ public class AdminFacade extends ClientFacade {
 
 		try {	
 			query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
-			customerVsCouponTable = GetTableByID(CouponID,query);
+			customerVsCouponTable = m_coupons.GetTableByID(CouponID,query);
 			
 			while(customerVsCouponTable.next())
 			{
@@ -107,8 +107,8 @@ public class AdminFacade extends ClientFacade {
 
 			//Delete from customers_vs_coupons table
 			query = "DELETE * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
-			executeQueryByID(CouponID,query);
-			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+			m_coupons.executeQueryByID(CouponID,query);
+			
 
 		} 
 		catch (SQLException e) {

@@ -1,4 +1,5 @@
 package DataAccessObjects;
+import java.sql.ResultSet;
 import java.util.*;
 import JavaBeans.*;
 
@@ -10,5 +11,7 @@ public interface CouponsDAO {
 	public Coupon getOneCoupon(int couponID);
 	public void addCopounPurchase(int customerID, int couponID);
 	public void deleteCopounPurchase(int customerID, int couponID);
+	public ResultSet GetTableByID(int couponID,String query);
+	public void executeQueryByID(int couponID,String query);
 }
 
