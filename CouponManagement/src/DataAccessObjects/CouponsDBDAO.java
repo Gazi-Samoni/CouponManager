@@ -45,18 +45,76 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	
 	public ArrayList<Coupon> getAllCoupons(){
-		return new ArrayList<Coupon>();
+		
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+		String query = "SELECT * FROM `project.1`.`coupons`;\r\n";
+		
+		try {
+			ResultSet couponsTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			while(couponsTable.next())
+			{
+				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
+				coupons.add(coupon);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return coupons;
 	}
 	
 	public Coupon getOneCoupon(int couponID) {
-		return new Coupon();
+		Coupon coupon = null;
+		String query = "SELECT * FROM `project.1`.`coupons` WHERE ('ID' = '" + couponID + "');\r\n";
+		
+		try {
+			ResultSet couponsTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(couponsTable.next() == true)
+			{
+				coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
+			}
+			
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
+
+		return coupon;
 	}
 	
 	public void addCopounPurchase(int customerID, int couponID) {
+		// add to customers_vs_coupons
+		String query = "UPDATE `project.1`.`customers_vs_coupons` SET COUPON_ID = '" + couponID + "', CUSTOMER_ID = '" + customerID + "';\r\n";
+		try {
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
 	public void deleteCopounPurchase(int customerID, int couponID) {
-		
+		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "', CUSTOMER_ID = '" + customerID + "');\r\n";
+		try {
+			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
 	}
+	
+	public ResultSet getCustomerVsCouponTable(Coupon couponID) {
+		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
+		ResultSet customerVScoupon = null;
+		try {
+			customerVScoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return customerVScoupon;
+	}
+
 }

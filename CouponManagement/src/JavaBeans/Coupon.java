@@ -88,6 +88,20 @@ public class Coupon {
 
 	}
 	
+	public Coupon(int id, int companyID, Category category, String title, String descprition, Date startDate, Date endDate, int amount, double price, String image) {
+		this.m_id = id;
+		this.m_companyID = companyID;
+		this.m_category = category;
+		this.m_title = title;
+		this.m_description = descprition;
+		this.m_startDate = startDate;
+		this.m_endDate = endDate;
+		this.m_amount = amount;
+		this.m_price = price;
+		this.m_image = image;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Coupon [id=" + m_id + ", companyID=" + m_companyID + ", category=" + m_category + ", title=" + m_title

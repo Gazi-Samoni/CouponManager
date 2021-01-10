@@ -17,7 +17,18 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		boolean isExist = true;
 		
 		String query = "SELECT * FROM `project.1`.`companies` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
-		//ResultSet queryAnswerTable = ;
+		ResultSet companySet = null;
+		
+		try {
+			companySet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(companySet.next() == false)
+			{
+				isExist = false;
+			}
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		return isExist;
 	}

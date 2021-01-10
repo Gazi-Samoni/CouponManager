@@ -1,5 +1,4 @@
 package DataAccessObjects;
-import java.sql.SQLException;
 import java.util.*;
 import java.sql.*;
 import JavaBeans.*;
@@ -14,7 +13,23 @@ public class CustomersDBDAO implements CustomersDAO {
 	}
 	
 	public boolean isCustomerExists(String email, String password) {
-		return true;
+		boolean isExist = true;
+		
+		String query = "SELECT * FROM `project.1`.`costumers` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
+		ResultSet costumerSet = null;
+		
+		try {
+			costumerSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			if(costumerSet.next() == false)
+			{
+				isExist = false;
+			}
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return isExist;
 	}
 	
 	public void addCustomer(Customer customer) {
