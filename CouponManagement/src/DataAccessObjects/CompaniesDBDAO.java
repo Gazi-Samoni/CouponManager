@@ -17,7 +17,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		boolean isExist = true;
 		
 		String query = "SELECT * FROM `project.1`.`companies` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
-		ResultSet queryAnswerTable = ;
+		//ResultSet queryAnswerTable = ;
 		
 		return isExist;
 	}
