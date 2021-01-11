@@ -20,7 +20,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		ResultSet companySet = null;
 		
 		try {
-			companySet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			companySet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companySet.next() == false)
 			{
 				isExist = false;
@@ -55,6 +55,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		
 	}
 
 	public void deleteCompany(int companyID) {
@@ -75,7 +76,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		ArrayList<Company> companies = new ArrayList<Company>();
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 		
 		while(companiesSet.next())
 		{
@@ -92,26 +93,21 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public Company getOneCompany(int companyID) {
 		
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = 23";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = 23;";
 		ResultSet companiesSet = null;
-		Company Company = null;
+		Company company = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
-		
-		System.out.println(companiesSet.getInt("ID"));
-		while(companiesSet.next())
-		{
-			System.out.println("innnn");
-			Company = new Company(companiesSet.getInt("ID"), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
-			System.out.println("in3333");
-		}
+			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			if(companiesSet.first()) {
+				company = new Company(companiesSet.getInt("ID"), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));	
+			}
 		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		
-		return Company;
+		return company;
 	}
 	public boolean isEmailExists(String email)
 	{
@@ -119,7 +115,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		ResultSet companiesSet = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.next() == false)
 			{
 				return false;
@@ -135,7 +131,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		ResultSet companiesSet = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.next() == false)
 			{
 				return false;
@@ -147,23 +143,20 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public Company getOneCompanyByName(String name)
 	{
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ('NAME' = '" + name + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (`NAME` = '" + name + "');";
 		ResultSet companiesSet = null;
-		Company Company = null;
+		Company company = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
-		
-		while(companiesSet.next())
-		{
-			Company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
-		}
+			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			if( companiesSet.first())
+				company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
 		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		
-		return Company;
+		return company;
 		
 	}
 }

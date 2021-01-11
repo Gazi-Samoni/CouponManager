@@ -23,11 +23,14 @@ public class mainClass {
 		adminFacade.addCompany(company);
 		
 		
-		/*
+		
 		//update Company test
 			//should fail
 			company.set_id(23);
 			adminFacade.updateCompany(company);
+			
+			//restore original data
+			company.set_id(21);
 			
 			//should fail
 			company2.set_name("zerto");
@@ -36,11 +39,13 @@ public class mainClass {
 			////should succeed
 			company3.set_password("8888");
 			adminFacade.updateCompany(company3);
-		*/
-		//rest data
-		company.set_id(21);
-		company2.set_name("Intel");
+			
+			//restore original data
+			company.set_id(21);
+			company2.set_name("Intel");
 		
+
+		/*
 		Date date = new Date( );
 	
 		//create coupons
@@ -87,7 +92,7 @@ public class mainClass {
 		
 		Customer customer3 = adminFacade.getOneCustomer(customer2.getId());
 		System.out.println(customer3.toString());
-		
+		*/
 	
 		
 			

@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import JavaBeans.*;
-import ConnectionUtils.*;
+
 
 
 public class AdminFacade extends ClientFacade {
@@ -35,16 +35,17 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
 	{
-		Company tempCompany = this.m_companies.getOneCompany(company.get_id());
-		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name());
-		
+		Company tempCompany = this.m_companies.getOneCompany(company.get_id()); 
+		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name()); 
+		// its okay i understand it now..
+		// we should use ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY everywhere when we TAKE! info from DATA BASE
 		if(tempCompany== null || tempCompany2 == null)
 		{
 			System.out.println("Invaild input");
 		}
 		else 
 		{
-			if(tempCompany.get_name() != tempCompany2.get_name() || tempCompany.get_id() != tempCompany2.get_id())
+			if(!tempCompany.get_name().equals(tempCompany2.get_name()) || tempCompany.get_id() != tempCompany2.get_id())
 			{
 				System.out.println("Invaild input: u can't edit company's name/id");
 			}
@@ -72,14 +73,12 @@ public class AdminFacade extends ClientFacade {
 			coupons.remove(0);
 		}	
 	}
-	private void deleteCouponFromCustomerHistory(int CouponID) {
+	private void deleteCouponFromCustomerHistory(int couponID) {
 		ResultSet customerVsCouponTable=null;
 		
-		String query;
-
 		try {	
-			query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
-			customerVsCouponTable = m_coupons.GetTableByID(CouponID,query);
+			
+			customerVsCouponTable = m_coupons.GetTableByID(couponID);
 			
 			while(customerVsCouponTable.next())
 			{
@@ -87,7 +86,7 @@ public class AdminFacade extends ClientFacade {
 				ArrayList<Coupon> customerCoupons =  m_customers.getOneCustomer(customerID).getCoupons();
 				for(Coupon var :customerCoupons)
 				{
-					if(var.getId() == CouponID ) 
+					if(var.getId() == couponID ) 
 					{
 						customerCoupons.remove(var);
 					}
@@ -95,8 +94,8 @@ public class AdminFacade extends ClientFacade {
 			}
 
 			//Delete from customers_vs_coupons table
-			query = "DELETE * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + CouponID + "');\r\n";
-			m_coupons.executeQueryByID(CouponID,query);
+			
+			m_coupons.executeQueryByID(couponID);
 			
 
 		} 

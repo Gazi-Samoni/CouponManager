@@ -7,6 +7,7 @@ import java.util.*;
 public class ConnectionPool {
 	private static ConnectionPool m_connectionPool = null; 
 	private Set<Connection> m_connections;//open connections -> running now
+	private int curr = 0;
 	
 	//db connection design
 	
@@ -15,7 +16,7 @@ public class ConnectionPool {
     {       
     	m_connections = new HashSet<Connection>();
    
-    	for(int i=0; i< 10 ; i++) {
+    	for(int i=0; i< 50 ; i++) {
     		m_connections.add(SQLconnection.GetConnection()); 
     	}
     } 
@@ -55,6 +56,8 @@ public class ConnectionPool {
     		m_connections.remove(connection);
     		// TODO: check if iterator.next removes the returned connection. 
     	}
+    	
+    	System.out.println("connection num " + curr++ + "is out ");
     	return connection;
     }
 

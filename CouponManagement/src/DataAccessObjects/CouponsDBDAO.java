@@ -49,7 +49,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		String query = "SELECT * FROM `project.1`.`coupons`;\r\n";
 		
 		try {
-			ResultSet couponsTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			ResultSet couponsTable = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			while(couponsTable.next())
 			{
 				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
@@ -68,7 +68,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		String query = "SELECT * FROM `project.1`.`coupons` WHERE ('ID' = '" + couponID + "');\r\n";
 		
 		try {
-			ResultSet couponsTable = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			ResultSet couponsTable = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(couponsTable.next() == true)
 			{
 				coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
@@ -104,8 +104,11 @@ public class CouponsDBDAO implements CouponsDAO {
 		}
 	}
 	
-	public ResultSet GetTableByID(int couponID,String query) {
+	public ResultSet GetTableByID(int couponID) {
 		ResultSet customerVScoupon = null;
+		
+		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
+		
 		try {
 			customerVScoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
 		} catch (SQLException e) {
@@ -114,8 +117,10 @@ public class CouponsDBDAO implements CouponsDAO {
 		
 		return customerVScoupon;
 	}
-	public void executeQueryByID(int couponID,String query)
+	
+	public void executeQueryByID(int couponID)
 	{
+		String query = "DELETE * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
