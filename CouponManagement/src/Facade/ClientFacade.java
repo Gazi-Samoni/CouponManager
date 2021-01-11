@@ -12,6 +12,7 @@ public abstract class ClientFacade {
 		m_companies = new CompaniesDBDAO();
 		m_customers = new CustomersDBDAO();
 	}
+	
 	public abstract boolean login(String email,String password);
 
 }

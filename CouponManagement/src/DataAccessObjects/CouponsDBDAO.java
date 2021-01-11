@@ -104,13 +104,12 @@ public class CouponsDBDAO implements CouponsDAO {
 		}
 	}
 	
-	public ResultSet GetTableByID(int couponID) {
+	public ResultSet getTableByID(int couponID) {
 		ResultSet customerVScoupon = null;
-		
 		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE ('COUPON_ID' = '" + couponID + "');\r\n";
 		
 		try {
-			customerVScoupon = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			customerVScoupon = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

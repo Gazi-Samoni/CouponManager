@@ -45,13 +45,13 @@ public class mainClass {
 			company2.set_name("Intel");
 		
 
-		/*
+		
 		Date date = new Date( );
 	
 		//create coupons
 		Coupon coupon = new Coupon(31,company.get_id(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
 		
-		CouponsDAO  couponsDAO = new CouponsDBDAO();
+		CouponsDAO couponsDAO = new CouponsDBDAO();
 		couponsDAO.addCoupon(coupon);
 		
 		
@@ -92,7 +92,7 @@ public class mainClass {
 		
 		Customer customer3 = adminFacade.getOneCustomer(customer2.getId());
 		System.out.println(customer3.toString());
-		*/
+		
 	
 		
 			

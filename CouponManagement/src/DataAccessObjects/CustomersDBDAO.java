@@ -74,7 +74,7 @@ public class CustomersDBDAO implements CustomersDAO {
 		ArrayList<Customer> costumers = new ArrayList<Customer>();
 		
 		try {
-			costumersSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			costumersSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 		
 		while(costumersSet.next())
 		{
@@ -91,17 +91,15 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public Customer getOneCustomer(int customerID) {
 		
-		String query = "SELECT * FROM `project.1`.`costumers` WHERE ('ID' = '" + customerID + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.costumers WHERE ('ID' = '" + customerID + "') ;\r\n";
 		ResultSet costumersSet = null;
 		Customer result = null;
 		
 		try {
-			costumersSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
-		
-		while(costumersSet.next())
-		{
+			costumersSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			if(costumersSet.first()) {
 				result = new Customer(costumersSet.getInt(1), costumersSet.getString(2), costumersSet.getString(3), costumersSet.getString(4), costumersSet.getString(5));
-		}
+			}
 		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -111,11 +109,11 @@ public class CustomersDBDAO implements CustomersDAO {
 	}
 	public boolean isCustomerEmailExists(String email)
 	{
-		String query = "SELECT * FROM `project.1`.`costumers` WHERE ('ID' = '" + email + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.costumers WHERE ('EMAIL' = '" + email + "')";
 		ResultSet costumersSet = null;
 		boolean isExist = false;
 		try {
-			costumersSet = m_connectionPool.getConnection().createStatement().executeQuery(query);
+			costumersSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(costumersSet.next() == false)
 			{
 				isExist = true;

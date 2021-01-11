@@ -78,7 +78,7 @@ public class AdminFacade extends ClientFacade {
 		
 		try {	
 			
-			customerVsCouponTable = m_coupons.GetTableByID(couponID);
+			customerVsCouponTable = m_coupons.getTableByID(couponID);
 			
 			while(customerVsCouponTable.next())
 			{
