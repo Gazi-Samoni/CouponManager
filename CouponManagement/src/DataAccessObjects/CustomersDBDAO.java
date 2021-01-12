@@ -15,7 +15,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	public boolean isCustomerExists(String email, String password) {
 		boolean isExist = true;
 		
-		String query = "SELECT * FROM `project.1`.`costumers` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.costumers WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
 		ResultSet costumerSet = null;
 		
 		try {
@@ -34,8 +34,8 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void addCustomer(Customer customer) {
 		
-		String query = "INSERT INTO `project.1`.`customers` (`ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL` ,`PASSWORD`) "
-				+ "VALUES " + "('" + customer.getId() + "' '"+ customer.getFirstName()  +"', '"+ customer.getLastName() +"', '"+ customer.getEmail() + "', '" + customer.getPassword() + "');\r\n";
+		String query = "INSERT INTO `project.1`.`customers` (`ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`) "
+				+ "VALUES " + "('" + customer.getId() + "', '"+ customer.getFirstName()  +"', '"+ customer.getLastName() +"', '"+ customer.getEmail() + "', '" + customer.getPassword() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -58,7 +58,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void deleteCustomer(int customerID) {
 		
-		String query = "DELETE FROM `project.1`.`customers` WHERE ('ID' = '" + customerID + "');\r\n";
+		String query = "DELETE FROM `project.1`.`customers` WHERE (ID = '" + customerID + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -69,7 +69,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public ArrayList<Customer> getAllCustomers(){
 		
-		String query = "SELECT * FROM `project.1`.`costumers` ;\r\n";
+		String query = "SELECT * FROM `project.1`.costumers ;\r\n";
 		ResultSet costumersSet = null;
 		ArrayList<Customer> costumers = new ArrayList<Customer>();
 		
@@ -91,7 +91,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public Customer getOneCustomer(int customerID) {
 		
-		String query = "SELECT * FROM `project.1`.costumers WHERE ('ID' = '" + customerID + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.costumers WHERE (ID = '" + customerID + "') ;\r\n";
 		ResultSet costumersSet = null;
 		Customer result = null;
 		
@@ -109,19 +109,18 @@ public class CustomersDBDAO implements CustomersDAO {
 	}
 	public boolean isCustomerEmailExists(String email)
 	{
-		String query = "SELECT * FROM `project.1`.costumers WHERE ('EMAIL' = '" + email + "')";
+		String query = "SELECT * FROM `project.1`.customers WHERE (EMAIL = '" + email + "')";
+		
 		ResultSet costumersSet = null;
-		boolean isExist = false;
+		boolean isExists = false;
 		try {
 			costumersSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-			if(costumersSet.next() == false)
-			{
-				isExist = true;
-			}
+			isExists = costumersSet.first();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return isExist;
+		
+		return isExists;
 	}
 	
 }

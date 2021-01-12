@@ -14,8 +14,8 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void addCoupon(Coupon coupon) {
 		
-		String query = "INSERT INTO `project.1`.`coupons` (`ID`, `COMPANY_ID`, `CATEGORY_ID`, `TITLE` ,`DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
-				+ "VALUES " + "('" + coupon.getId() + "' '"+ coupon.getCompanyID()  +"', '"+ coupon.getCategory() +"', '"+ coupon.getTitle() + "', '" + coupon.getDescription() + "', '" + coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + coupon.getImage() + "');\r\n";
+		String query = "INSERT INTO `project.1`.`coupons` (`ID`, `COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
+				+ "VALUES " + "('" + coupon.getId() + "', '"+ coupon.getCompanyID()  +"', '"+ coupon.getCategory() +"', '"+ coupon.getTitle() + "', '" + coupon.getDescription() + "', '" + coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + coupon.getImage() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
