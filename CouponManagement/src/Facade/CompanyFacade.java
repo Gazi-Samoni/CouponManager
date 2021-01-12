@@ -1,6 +1,7 @@
 package Facade;
 import JavaBeans.*;
 import java.util.*;
+
 public class CompanyFacade extends ClientFacade {
 	private int m_companyID;
 	
@@ -8,9 +9,9 @@ public class CompanyFacade extends ClientFacade {
 	public int getCompanyID() {
 		return m_companyID;
 	}
-	public CompanyFacade()
+	public CompanyFacade(int companyID)
 	{
-		
+		m_companyID = companyID;
 	}
 	@Override
 	public boolean login(String email, String password) {
@@ -19,6 +20,20 @@ public class CompanyFacade extends ClientFacade {
 	}
 	public void addCoupon(Coupon coupon)
 	{
+		ArrayList<Coupon> coupons = m_coupons.getAllCouponsByCompanyID(this.m_companyID);
+		boolean isExists= false;
+		for(Coupon var:coupons)
+		{
+			if(var.getTitle().equals(coupon.getTitle()))
+			{
+				isExists=true;
+				System.out.println(var.getTitle() + "`s coupon already exists");
+			}
+		}
+		if(!isExists)
+		{
+			m_coupons.addCoupon(coupon);
+		}
 		
 	}
 	public void updateCoupon(Coupon coupon)

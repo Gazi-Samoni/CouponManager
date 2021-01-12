@@ -15,7 +15,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public void addCoupon(Coupon coupon) {
 		
 		String query = "INSERT INTO `project.1`.`coupons` (`ID`, `COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
-				+ "VALUES " + "('" + coupon.getId() + "', '" + coupon.getCompanyID()  + "', '" + Category.ToInt(coupon.getCategory()) + "', '" + coupon.getTitle() + "', '" + coupon.getDescription() + "', '" + coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + coupon.getImage() + "');";
+				+ "VALUES " + "('" + coupon.getID() + "', '" + coupon.getCompanyID()  + "', '" + Category.ToInt(coupon.getCategory()) + "', '" + coupon.getTitle() + "', '" + coupon.getDescription() + "', '" + coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + coupon.getImage() + "');";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -25,7 +25,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	
 	public void updateCoupon(Coupon coupon) {
-		String query = "UPADTE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getId() + "');";
+		String query = "UPADTE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
 		} catch (SQLException e) {
@@ -47,6 +47,25 @@ public class CouponsDBDAO implements CouponsDAO {
 		
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		String query = "SELECT * FROM `project.1`.`coupons`;";
+		
+		try {
+			ResultSet couponsTable = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			while(couponsTable.next())
+			{
+				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
+				coupons.add(coupon);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return coupons;
+	}
+	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID){
+		
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+		String query = "SELECT * FROM `project.1`.`coupons` WHERE ID = '"+ companyID + "';";
 		
 		try {
 			ResultSet couponsTable = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);

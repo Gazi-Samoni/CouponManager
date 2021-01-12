@@ -65,7 +65,7 @@ public class mainClass {
 		//add customer	
 		adminFacade.addCustomer(customer);
 		
-		couponsDAO.addCopounPurchase(customer.getId(), coupon.getId());
+		couponsDAO.addCopounPurchase(customer.getId(), coupon.getID());
 		//delete 
 		/*adminFacade.deleteCompany(company3.get_id());
 		*/

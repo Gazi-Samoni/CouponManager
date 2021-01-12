@@ -68,8 +68,8 @@ public class AdminFacade extends ClientFacade {
 		while(!coupons.isEmpty())
 		{
 			coupon = coupons.get(0);
-			deleteCouponFromCustomerHistory(coupon.getId());
-			this.m_coupons.deleteCoupon(coupon.getId());
+			deleteCouponFromCustomerHistory(coupon.getID());
+			this.m_coupons.deleteCoupon(coupon.getID());
 			coupons.remove(0);
 		}	
 	}
@@ -86,7 +86,7 @@ public class AdminFacade extends ClientFacade {
 				ArrayList<Coupon> customerCoupons =  m_customers.getOneCustomer(customerID).getCoupons();
 				for(Coupon var :customerCoupons)
 				{
-					if(var.getId() == couponID ) 
+					if(var.getID() == couponID ) 
 					{
 						customerCoupons.remove(var);
 					}
@@ -133,7 +133,7 @@ public class AdminFacade extends ClientFacade {
 		//delete from customer_vs_coupon table
 		for(Coupon var:coupons)
 		{
-			this.m_coupons.deleteCopounPurchase(customerID, var.getId());
+			this.m_coupons.deleteCopounPurchase(customerID, var.getID());
 		}
 		this.m_customers.deleteCustomer(customerID);
 	}

@@ -3,11 +3,11 @@ import java.util.*;
 
 public class Coupon {
 	
-	public int getId() {
+	public int getID() {
 		return m_id;
 	}
 
-	public void setId(int id) {
+	public void setID(int id) {
 		this.m_id = id;
 	}
 
