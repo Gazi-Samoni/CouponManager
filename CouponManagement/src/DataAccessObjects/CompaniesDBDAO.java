@@ -35,7 +35,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 
 	public void addCompany(Company company) {
 		
-		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.get_id()  +"', '"+ company.get_name() +"', '"+ company.get_email() + "', '" + company.get_password() + "');\r\n";
+		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.getID()  +"', '"+ company.getName() +"', '"+ company.getEmail() + "', '" + company.getPassword() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -47,7 +47,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public void updateCompany(Company company) { // reverse name set
 		
-		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.get_name() +"', EMAIL = '" + company.get_email() + "', PASSWORD = '"+ company.get_password() +"' WHERE ('ID' = '" + company.get_id() + "');\r\n";
+		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE ('ID' = '" + company.getID() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);

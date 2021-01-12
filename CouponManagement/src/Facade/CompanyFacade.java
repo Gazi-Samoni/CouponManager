@@ -5,6 +5,9 @@ public class CompanyFacade extends ClientFacade {
 	private int m_companyID;
 	
 
+	public int getCompanyID() {
+		return m_companyID;
+	}
 	public CompanyFacade()
 	{
 		

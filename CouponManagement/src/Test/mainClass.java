@@ -26,30 +26,30 @@ public class mainClass {
 		
 		//update Company test
 			//should fail
-			company.set_id(23);
+			company.setID(23);
 			adminFacade.updateCompany(company);
 			
 			//restore original data
-			company.set_id(21);
+			company.setID(21);
 			
 			//should fail
-			company2.set_name("zerto");
+			company2.setName("zerto");
 			adminFacade.updateCompany(company2);
 			
 			////should succeed
-			company3.set_password("8888");
+			company3.setPassword("8888");
 			adminFacade.updateCompany(company3);
 			
 			//restore original data
-			company.set_id(21);
-			company2.set_name("Intel");
+			company.setID(21);
+			company2.setName("Intel");
 		
 
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
 	
 		//create coupons
-		Coupon coupon = new Coupon(31,company.get_id(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
+		Coupon coupon = new Coupon(31,company.getID(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
 		
 		CouponsDAO couponsDAO = new CouponsDBDAO();
 		couponsDAO.addCoupon(coupon);
@@ -73,7 +73,7 @@ public class mainClass {
 		System.out.println(companies.get(0).toString());
 		
 		
-		Company company4 = adminFacade.getOneCompany(company2.get_id());
+		Company company4 = adminFacade.getOneCompany(company2.getID());
 		System.out.println(company4.toString());
 		
 		

@@ -3,43 +3,43 @@ import java.util.*;
 
 public class Company {
 	
-	public int get_id() {
+	public int getID() {
 		return m_id;
 	}
 
-	public void set_id(int m_id) {
+	public void setID(int m_id) {
 		this.m_id = m_id;
 	}
 
-	public String get_name() {
+	public String getName() {
 		return m_name;
 	}
 
-	public void set_name(String m_name) {
+	public void setName(String m_name) {
 		this.m_name = m_name;
 	}
 
-	public String get_email() {
+	public String getEmail() {
 		return m_email;
 	}
 
-	public void set_email(String m_email) {
+	public void setEmail(String m_email) {
 		this.m_email = m_email;
 	}
 
-	public String get_password() {
+	public String getPassword() {
 		return m_password;
 	}
 
-	public void set_password(String m_password) {
+	public void setPassword(String m_password) {
 		this.m_password = m_password;
 	}
 
-	public ArrayList<Coupon> get_coupons() {
+	public ArrayList<Coupon> getCoupons() {
 		return m_coupons;
 	}
 
-	public void set_coupons(ArrayList<Coupon> m_coupons) {
+	public void setCoupons(ArrayList<Coupon> m_coupons) {
 		this.m_coupons = m_coupons;
 	}
 

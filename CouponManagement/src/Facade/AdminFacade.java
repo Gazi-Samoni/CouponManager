@@ -19,11 +19,11 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void addCompany(Company company)
 	{
-		if(this.m_companies.isEmailExists(company.get_email()))
+		if(this.m_companies.isEmailExists(company.getEmail()))
 		{
 			System.out.println("Company's email already exists");
 		}
-		else if(this.m_companies.isNameExists(company.get_name()))
+		else if(this.m_companies.isNameExists(company.getName()))
 		{
 			System.out.println("Company's name already exists");
 		}
@@ -35,8 +35,8 @@ public class AdminFacade extends ClientFacade {
 	}
 	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
 	{
-		Company tempCompany = this.m_companies.getOneCompany(company.get_id()); 
-		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.get_name()); 
+		Company tempCompany = this.m_companies.getOneCompany(company.getID()); 
+		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.getName()); 
 		// its okay i understand it now..
 		// we should use ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY everywhere when we TAKE! info from DATA BASE
 		if(tempCompany== null || tempCompany2 == null)
@@ -45,7 +45,7 @@ public class AdminFacade extends ClientFacade {
 		}
 		else 
 		{
-			if(!tempCompany.get_name().equals(tempCompany2.get_name()) || tempCompany.get_id() != tempCompany2.get_id())
+			if(!tempCompany.getName().equals(tempCompany2.getName()) || tempCompany.getID() != tempCompany2.getID())
 			{
 				System.out.println("Invaild input: u can't edit company's name/id");
 			}
@@ -58,7 +58,7 @@ public class AdminFacade extends ClientFacade {
 	public void deleteCompany(int companyID)
 	{
 		Company company = this.m_companies.getOneCompany(companyID);
-		ArrayList<Coupon> coupons = company.get_coupons();
+		ArrayList<Coupon> coupons = company.getCoupons();
 		deleteCouponsHistory(coupons);
 		this.m_companies.deleteCompany(companyID);
 	}
