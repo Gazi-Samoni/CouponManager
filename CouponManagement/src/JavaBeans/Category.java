@@ -22,4 +22,20 @@ public enum Category {
 		
 		return null;
 	}
+
+	public static int ToInt(Category category) {
+		switch(category)
+		{
+			case Food:
+				return 0;
+			case Electricity:
+				return 1;
+			case Restaurant:
+				return 2;
+			case Vacation:
+				return 3;	
+		}
+		
+		return -1;
+	}
 }

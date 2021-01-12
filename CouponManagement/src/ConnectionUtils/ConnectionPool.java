@@ -56,8 +56,6 @@ public class ConnectionPool {
     		m_connections.remove(connection);
     		// TODO: check if iterator.next removes the returned connection. 
     	}
-    	
-    	System.out.println("connection num " + curr++ + "is out ");
     	return connection;
     }
 

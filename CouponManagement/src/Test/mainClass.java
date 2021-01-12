@@ -45,8 +45,8 @@ public class mainClass {
 			company2.set_name("Intel");
 		
 
-		
-		Date date = new Date( );
+		long millis=System.currentTimeMillis(); 
+		java.sql.Date date = new java.sql.Date(millis);
 	
 		//create coupons
 		Coupon coupon = new Coupon(31,company.get_id(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
@@ -66,16 +66,16 @@ public class mainClass {
 		adminFacade.addCustomer(customer);
 		
 		couponsDAO.addCopounPurchase(customer.getId(), coupon.getId());
-		//delete company
-		adminFacade.deleteCompany(company3.get_id());
-		
-		
+		//delete 
+		/*adminFacade.deleteCompany(company3.get_id());
+		*/
 		ArrayList<Company> companies = adminFacade.getAllCompanies();
 		System.out.println(companies.get(0).toString());
 		
 		
 		Company company4 = adminFacade.getOneCompany(company2.get_id());
 		System.out.println(company4.toString());
+		
 		
 		
 		

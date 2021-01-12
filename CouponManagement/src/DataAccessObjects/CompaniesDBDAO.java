@@ -35,8 +35,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 
 	public void addCompany(Company company) {
 		
-		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`) "
-				+ "VALUES " + "('"+ company.get_id()  +"', '"+ company.get_name() +"', '"+ company.get_email() + "', '" + company.get_password() + "');\r\n";
+		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.get_id()  +"', '"+ company.get_name() +"', '"+ company.get_email() + "', '" + company.get_password() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);
@@ -93,7 +92,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public Company getOneCompany(int companyID) {
 		
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = 23;";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = '" + companyID + "';";
 		ResultSet companiesSet = null;
 		Company company = null;
 		
