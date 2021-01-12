@@ -123,7 +123,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		}
 	}
 	
-	public ResultSet getTableByID(int couponID) {
+	public ResultSet getCustomerVsCouponTableByID(int couponID) {
 		ResultSet customerVScoupon = null;
 		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
 		

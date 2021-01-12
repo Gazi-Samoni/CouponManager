@@ -37,8 +37,7 @@ public class AdminFacade extends ClientFacade {
 	{
 		Company tempCompany = this.m_companies.getOneCompany(company.getID()); 
 		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.getName()); 
-		// its okay i understand it now..
-		// we should use ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY everywhere when we TAKE! info from DATA BASE
+		
 		if(tempCompany== null || tempCompany2 == null)
 		{
 			System.out.println("Invaild input");
@@ -78,7 +77,7 @@ public class AdminFacade extends ClientFacade {
 		
 		try {	
 			
-			customerVsCouponTable = m_coupons.getTableByID(couponID);
+			customerVsCouponTable = m_coupons.getCustomerVsCouponTableByID(couponID);
 			
 			while(customerVsCouponTable.next())
 			{
