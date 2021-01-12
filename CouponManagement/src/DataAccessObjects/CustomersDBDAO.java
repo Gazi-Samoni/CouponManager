@@ -47,7 +47,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void updateCustomer(Customer customer) {
 		
-		String query = "UPDATE `project.1`.`customers` SET FIRST_NAME = '"+ customer.getFirstName() +"', LAST_NAME = '"+ customer.getLastName() +"', EMAIL = '"+ customer.getEmail() +"', PASSWORD = '"+ customer.getPassword() +"' WHERE ('ID' = '" + customer.getId() + "');\r\n";
+		String query = "UPDATE `project.1`.`customers` SET FIRST_NAME = '"+ customer.getFirstName() +"', LAST_NAME = '"+ customer.getLastName() +"', EMAIL = '"+ customer.getEmail() +"', PASSWORD = '"+ customer.getPassword() +"' WHERE (ID = '" + customer.getId() + "');\r\n";
 		
 		try {
 			m_connectionPool.getConnection().createStatement().executeUpdate(query);

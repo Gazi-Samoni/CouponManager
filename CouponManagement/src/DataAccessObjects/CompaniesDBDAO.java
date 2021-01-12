@@ -16,7 +16,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	public boolean isCompanyExists(String email, String password) {
 		boolean isExist = true;
 		
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ('EMAIL' = '" + email + "' AND 'PASSWORD' = '" + password + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
 		ResultSet companySet = null;
 		
 		try {
@@ -110,7 +110,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public boolean isEmailExists(String email)
 	{
-		String query = "SELECT EMAIL FROM `project.1`.`companies` WHERE (`EMAIL` = '" + email + "') ;\r\n";
+		String query = "SELECT EMAIL FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
@@ -126,7 +126,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public boolean isNameExists(String name)
 	{
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (`NAME` = '" + name + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
@@ -142,7 +142,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public Company getOneCompanyByName(String name)
 	{
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (`NAME` = '" + name + "');";
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "');";
 		ResultSet companiesSet = null;
 		Company company = null;
 		
