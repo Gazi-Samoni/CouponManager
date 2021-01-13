@@ -18,7 +18,7 @@ public class LoginManager {
 		
 		return instance;
 	}
-	/*
+	
 	public ClientFacade login(String email, String password, ClientType clientType)
 	{
 		ClientFacade client = null;
@@ -36,7 +36,7 @@ public class LoginManager {
 					CompanyFacade companyAuthority = new CompanyFacade();
 					isExist = companyAuthority.getCompanies().isCompanyExists(email, password);
 					if(isExist) {
-						int companyID = companyAuthority.getCompanyIdByEmailAndPassword(email,password);
+						int companyID = companyAuthority.getCompanies().getCompanyIdByEmailAndPassword(email,password);
 						companyAuthority.setID(companyID);
 						client = companyAuthority;
 					}
@@ -44,18 +44,18 @@ public class LoginManager {
 				
 			case Customer:
 					CustomerFacade customerAuthority = new CustomerFacade();
-					isExist = companyAuthority.getCustomers().isCustomerExists(email, password);
+					isExist = customerAuthority.getCustomers().isCustomerExists(email, password);
 					if(isExist) {
-						int customerID = customerAuthority.getCustomerIdByEmailAndPassword(email,password);
+						int customerID = customerAuthority.getCustomers().getCustomerIdByEmailAndPassword(email,password);
 						customerAuthority.setID(customerID);
 						client = customerAuthority;
 					}
-			defult:
+			default:
 				break;
 		}
 		
 		return client;
 	}
 	
-	*/
+	
 }

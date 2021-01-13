@@ -10,4 +10,5 @@ public interface CustomersDAO {
 	public ArrayList<Customer> getAllCustomers();
 	public Customer getOneCustomer(int customerID);
 	public boolean isCustomerEmailExists(String email);
+	public int getCustomerIdByEmailAndPassword(String email, String password);
 }

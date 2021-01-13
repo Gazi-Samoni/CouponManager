@@ -7,9 +7,6 @@ import java.util.*;
 public class ConnectionPool {
 	private static ConnectionPool m_connectionPool = null; 
 	private Set<Connection> m_connections;//open connections -> running now
-	private int curr = 0;
-	
-	//db connection design
 	
     // private constructor restricted to this class itself 
     private ConnectionPool() 

@@ -122,5 +122,24 @@ public class CustomersDBDAO implements CustomersDAO {
 		
 		return isExists;
 	}
+
+	@Override
+	public int getCustomerIdByEmailAndPassword(String email, String password) {
+	// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
+		
+		String query = "SELECT * FROM `project.1`.`customers` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
+		ResultSet customerSet = null;
+		int customerID = -1;
+		
+		try {
+			customerSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			customerSet.first();
+			customerID = customerSet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return customerID;
+	}
 	
 }

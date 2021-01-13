@@ -13,4 +13,5 @@ public interface CompaniesDAO {
 	public boolean isEmailExists(String email);
 	public boolean isNameExists(String name);
 	public Company getOneCompanyByName(String name);
+	public int getCompanyIdByEmailAndPassword(String email, String password);
 }

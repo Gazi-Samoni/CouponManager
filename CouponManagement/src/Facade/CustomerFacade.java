@@ -14,6 +14,9 @@ public class CustomerFacade extends ClientFacade  {
 	public CustomerFacade(int customerID) {
 		this.m_customerID = customerID;
 	}
+	
+	public CustomerFacade() {}
+	
 	@Override
 	public boolean login(String email, String password) {
 		
@@ -68,7 +71,7 @@ public class CustomerFacade extends ClientFacade  {
 	}
 	public ArrayList<Coupon> getCustomerCopons(){
 		ResultSet customerVScoupon = m_coupons.getCustomerVsCouponTableByCutomerID(this.m_customerID);
-		ArrayList<Coupon> coupons = null;
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		try {
 			while(customerVScoupon.next())
 			{
@@ -106,5 +109,10 @@ public class CustomerFacade extends ClientFacade  {
 	public Customer getCustomerDetails()
 	{
 		return m_customers.getOneCustomer(this.m_customerID);
+	}
+
+	public void setID(int customerID) {
+		m_customerID = customerID;
+		
 	}
 }

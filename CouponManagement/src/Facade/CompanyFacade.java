@@ -15,6 +15,8 @@ public class CompanyFacade extends ClientFacade {
 	{
 		m_companyID = companyID;
 	}
+	public CompanyFacade() {}
+	
 	@Override
 	public boolean login(String email, String password) {
 		
@@ -130,6 +132,10 @@ public class CompanyFacade extends ClientFacade {
 	public Company getCompanyDetails()
 	{
 		return m_companies.getOneCompany(this.m_companyID);
+	}
+	
+	public void setID(int companyID) {
+		m_companyID = companyID;
 	}
 	
 

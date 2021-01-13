@@ -158,4 +158,23 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		return company;
 		
 	}
+
+	@Override
+	public int getCompanyIdByEmailAndPassword(String email, String password) {
+		// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
+		
+		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
+		ResultSet companySet = null;
+		int companyID = -1;
+		
+		try {
+			companySet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			companySet.first();
+			companyID = companySet.getInt(1);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return companyID;
+	}
 }
