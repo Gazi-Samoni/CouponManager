@@ -22,6 +22,7 @@ public abstract class ClientFacade {
 
 	public CouponsDAO getCoupons() {
 		return m_coupons;
+		
 	}
 
 
