@@ -12,7 +12,8 @@ public interface CouponsDAO {
 	public Coupon getOneCoupon(int couponID);
 	public void addCopounPurchase(int customerID, int couponID);
 	public void deleteCopounPurchase(int customerID, int couponID);
-	public ResultSet getCustomerVsCouponTableByID(int couponID);
+	public ResultSet getCustomerVsCouponTableByCouponID(int couponID);
+	public ResultSet getCustomerVsCouponTableByCutomerID(int customerID);
 	public void executeQueryByID(int couponID);
 	
 }

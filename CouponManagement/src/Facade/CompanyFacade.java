@@ -70,7 +70,7 @@ public class CompanyFacade extends ClientFacade {
 	}
 	public void deleteCoupon(int couponID)
 	{
-		ResultSet customerVsCouponTable = m_coupons.getCustomerVsCouponTableByID(couponID);
+		ResultSet customerVsCouponTable = m_coupons.getCustomerVsCouponTableByCouponID(couponID);
 		
 		try {
 			while(customerVsCouponTable.next())
