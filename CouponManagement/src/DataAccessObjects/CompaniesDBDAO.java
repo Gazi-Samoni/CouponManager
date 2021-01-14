@@ -1,5 +1,4 @@
 package DataAccessObjects;
-import java.sql.SQLException;
 import java.util.*;
 import java.sql.*;
 import JavaBeans.*;
@@ -15,12 +14,13 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	
 	public boolean isCompanyExists(String email, String password) {
 		boolean isExist = true;
-		
+		Connection connection = null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
 		ResultSet companySet = null;
 		
 		try {
-			companySet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companySet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companySet.next() == false)
 			{
 				isExist = false;
@@ -29,53 +29,80 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
 		
 		return isExist;
 	}
 
 	public void addCompany(Company company) {
-		
+		Connection connection = null;
 		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.getID()  +"', '"+ company.getName() +"', '"+ company.getEmail() + "', '" + company.getPassword() + "');\r\n";
 		
 		try {
-			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+			connection = m_connectionPool.getConnection();
+			connection.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
 		}
 		
 	}
 	
 	public void updateCompany(Company company) { // reverse name set
-		
+		Connection connection = null;
 		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE ('ID' = '" + company.getID() + "');\r\n";
 		
 		try {
-			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+			connection = m_connectionPool.getConnection();
+			connection.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
 	}
 
 	public void deleteCompany(int companyID) {
-		
+		Connection connection = null;
 		String query = "DELETE FROM `project.1`.`companies` WHERE ('ID' = '" + companyID + "');\r\n";
 		
 		try {
-			m_connectionPool.getConnection().createStatement().executeUpdate(query);
+			connection = m_connectionPool.getConnection();
+			connection.createStatement().executeUpdate(query);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
 		}
 	}
 	
 	public ArrayList<Company> getAllCompanies(){
-		
+		Connection connection = null;
 		String query = "SELECT * FROM `project.1`.`companies` ;\r\n";
 		ResultSet companiesSet = null;
 		ArrayList<Company> companies = new ArrayList<Company>();
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 		
 		while(companiesSet.next())
 		{
@@ -86,18 +113,25 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
 			
 		return companies;
 	}
 	
 	public Company getOneCompany(int companyID) {
-		
+		Connection connection=null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = '" + companyID + "';";
 		ResultSet companiesSet = null;
 		Company company = null;
-		
+			
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.first()) {
 				company = new Company(companiesSet.getInt("ID"), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));	
 			}
@@ -105,16 +139,23 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
 		
 		return company;
 	}
-	public boolean isEmailExists(String email)
-	{
+	public boolean isEmailExists(String email) {
+		Connection connection=null;
 		String query = "SELECT EMAIL FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companiesSet =connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.next() == false)
 			{
 				return false;
@@ -122,15 +163,23 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
+		
 		return true;
 	}
-	public boolean isNameExists(String name)
-	{
+	public boolean isNameExists(String name) {
+		Connection connection=null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.next() == false)
 			{
 				return false;
@@ -138,21 +187,34 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
 		return true;
 	}
-	public Company getOneCompanyByName(String name)
-	{
+	public Company getOneCompanyByName(String name) {
+		Connection connection=null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "');";
 		ResultSet companiesSet = null;
 		Company company = null;
 		
 		try {
-			companiesSet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if( companiesSet.first())
 				company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
 		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
 		}
 		
 		return company;
@@ -162,17 +224,24 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	@Override
 	public int getCompanyIdByEmailAndPassword(String email, String password) {
 		// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
-		
+		Connection connection=null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
 		ResultSet companySet = null;
 		int companyID = -1;
 		
 		try {
-			companySet = m_connectionPool.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			connection = m_connectionPool.getConnection();
+			companySet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			companySet.first();
 			companyID = companySet.getInt(1);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
 		}
 		
 		return companyID;
