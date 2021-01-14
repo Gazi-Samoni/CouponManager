@@ -106,13 +106,11 @@ public class CustomerFacade extends ClientFacade  {
 		}
 		return coupons;
 	}
-	public Customer getCustomerDetails()
-	{
+	public Customer getCustomerDetails(){
 		return m_customers.getOneCustomer(this.m_customerID);
 	}
 
 	public void setID(int customerID) {
 		m_customerID = customerID;
-		
-	}
+		}
 }
