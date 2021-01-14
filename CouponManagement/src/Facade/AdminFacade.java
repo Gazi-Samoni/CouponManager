@@ -83,13 +83,21 @@ public class AdminFacade extends ClientFacade {
 			{
 				int customerID = customerVsCouponTable.getInt(1);
 				ArrayList<Coupon> customerCoupons =  m_customers.getOneCustomer(customerID).getCoupons();
-				for(Coupon var :customerCoupons)
+				
+				for (int i = 0; i < customerCoupons.size(); i++) {
+					if(customerCoupons.get(i).getID() == couponID ) 
+					{
+						customerCoupons.remove(i);
+					}
+				}
+				/* to ask dawod
+				for(Coupon var:customerCoupons)
 				{
 					if(var.getID() == couponID ) 
 					{
 						customerCoupons.remove(var);
 					}
-				}
+				}*/
 			}
 
 			//Delete from customers_vs_coupons table

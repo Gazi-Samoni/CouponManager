@@ -78,7 +78,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 
 	public void deleteCompany(int companyID) {
 		Connection connection = null;
-		String query = "DELETE FROM `project.1`.`companies` WHERE ('ID' = '" + companyID + "');\r\n";
+		String query = "DELETE FROM `project.1`.`companies` WHERE (ID = '" + companyID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();

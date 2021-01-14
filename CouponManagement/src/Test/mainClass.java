@@ -2,12 +2,16 @@ package Test;
 
 import Facade.*;
 import JavaBeans.*;
+import Table.DeleteDB;
+
 import java.util.*;
 import DataAccessObjects.*;
 
 public class mainClass {
 	public static void main(String[] args)
 	{
+		DeleteDB.deleteDBTables();
+		
 		AdminFacade adminFacade = new AdminFacade();
 		System.out.println("Login" + adminFacade.login("admin@admin.com","admin"));
 		
