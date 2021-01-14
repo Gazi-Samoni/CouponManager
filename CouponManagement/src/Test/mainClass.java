@@ -22,8 +22,7 @@ public class mainClass {
 		//should fail
 		adminFacade.addCompany(company);
 		
-		
-		
+				
 		//update Company test
 			//should fail
 			company.setID(23);

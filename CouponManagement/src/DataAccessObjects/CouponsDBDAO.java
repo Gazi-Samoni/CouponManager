@@ -33,7 +33,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void updateCoupon(Coupon coupon) {
 		Connection connection=null;
-		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
+		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ Category.ToInt(coupon.getCategory()) +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -51,7 +51,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void deleteCoupon(int couponID) {
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.`coupons` WHERE (COUPON_ID = '" + couponID + "');";
+		String query = "DELETE FROM `project.1`.`coupons` WHERE (ID = '" + couponID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
