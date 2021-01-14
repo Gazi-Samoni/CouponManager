@@ -24,8 +24,18 @@ public class CustomerFacade extends ClientFacade  {
 	}
 	public void purchaseCoupon(Coupon coupon)
 	{
-		ResultSet customerVScoupon = m_coupons.getCustomerVsCouponTableByCutomerID(this.m_customerID);
+	
+		/*
+		if(coupons != null) {
+			if(coupons.contains(coupon)) {
+				purchased = true;
+			}
+		}
+		*/
+		
 		boolean purchased = false;
+		ResultSet customerVScoupon = m_customers.getCustomerVsCouponTableByCutomerID(this.m_customerID);
+		
 		try {
 			while(customerVScoupon.next())
 			{
@@ -38,7 +48,8 @@ public class CustomerFacade extends ClientFacade  {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		//Not purchased
+		
+		//if not purchased
 		if(!purchased)
 		{
 			if(coupon.getAmount()>0)
@@ -48,6 +59,7 @@ public class CustomerFacade extends ClientFacade  {
 					m_coupons.addCopounPurchase(this.m_customerID, coupon.getID());
 					coupon.setAmount(coupon.getAmount()-1);
 					m_coupons.updateCoupon(coupon);
+					m_customers.getOneCustomer(this.m_customerID).getCoupons().add(coupon);
 				}
 				else
 				{
@@ -70,18 +82,8 @@ public class CustomerFacade extends ClientFacade  {
 		return endDate.before(NowDate);
 	}
 	public ArrayList<Coupon> getCustomerCopons(){
-		ResultSet customerVScoupon = m_coupons.getCustomerVsCouponTableByCutomerID(this.m_customerID);
-		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		try {
-			while(customerVScoupon.next())
-			{
-				coupons.add(m_coupons.getOneCoupon(customerVScoupon.getInt(2)));
-				
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return coupons;
+	
+		return m_customers.getCustomerCoupons(this.m_customerID);
 	}
 	public ArrayList<Coupon> getCustomerCopons(Category category){
 		ArrayList<Coupon> coupons = getCustomerCopons();
@@ -106,8 +108,14 @@ public class CustomerFacade extends ClientFacade  {
 		}
 		return coupons;
 	}
+	
 	public Customer getCustomerDetails(){
-		return m_customers.getOneCustomer(this.m_customerID);
+		Customer customer= m_customers.getOneCustomer(this.m_customerID);
+		
+		customer.setCoupons(this.getCustomerCopons());
+	
+		return customer;
+			
 	}
 
 	public void setID(int customerID) {

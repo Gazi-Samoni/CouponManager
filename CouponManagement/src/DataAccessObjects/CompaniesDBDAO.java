@@ -106,8 +106,9 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		
 		while(companiesSet.next())
 		{
-				Company toAdd = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
-				companies.add(toAdd);
+				Company company = new Company(companiesSet.getInt(1), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));
+				company.setCoupons(getAllCouponsByCompanyID(company.getID()));
+				companies.add(company);
 		}
 		
 		} catch (SQLException e) {
@@ -122,6 +123,33 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			
 		return companies;
 	}
+	//new
+	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID){
+		Connection connection=null;
+		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
+		String query = "SELECT * FROM `project.1`.`coupons` WHERE COMPANY_ID = '"+ companyID + "';";
+		
+		try {
+			connection = m_connectionPool.getConnection();
+			ResultSet couponsTable = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			while(couponsTable.next())
+			{
+				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
+				coupons.add(coupon);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
+		
+		return coupons;
+	}
 	
 	public Company getOneCompany(int companyID) {
 		Connection connection=null;
@@ -134,6 +162,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
 			if(companiesSet.first()) {
 				company = new Company(companiesSet.getInt("ID"), companiesSet.getString(2), companiesSet.getString(3), companiesSet.getString(4));	
+				company.setCoupons(getAllCouponsByCompanyID(company.getID()));
 			}
 		
 		} catch (SQLException e) {

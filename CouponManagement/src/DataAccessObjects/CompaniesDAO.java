@@ -9,7 +9,7 @@ public interface CompaniesDAO {
 	public void deleteCompany(int companyID);
 	public ArrayList<Company> getAllCompanies();
 	public Company getOneCompany(int companyID);
-	
+	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID);
 	public boolean isEmailExists(String email);
 	public boolean isNameExists(String name);
 	public Company getOneCompanyByName(String name);

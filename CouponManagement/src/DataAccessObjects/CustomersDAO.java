@@ -1,4 +1,5 @@
 package DataAccessObjects;
+import java.sql.ResultSet;
 import java.util.*;
 import JavaBeans.*;
 
@@ -11,4 +12,6 @@ public interface CustomersDAO {
 	public Customer getOneCustomer(int customerID);
 	public boolean isCustomerEmailExists(String email);
 	public int getCustomerIdByEmailAndPassword(String email, String password);
+	public ResultSet getCustomerVsCouponTableByCutomerID(int customerID);
+	public ArrayList<Coupon> getCustomerCoupons(int customerID);
 }

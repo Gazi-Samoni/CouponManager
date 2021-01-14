@@ -43,7 +43,7 @@ public class CompanyFacade extends ClientFacade {
 	}
 	private boolean isCouponTitleExists(Coupon coupon)
 	{
-		ArrayList<Coupon> coupons = m_coupons.getAllCouponsByCompanyID(this.m_companyID);
+		ArrayList<Coupon> coupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		boolean isExists= false;
 		for(Coupon var:coupons)
 		{
@@ -101,11 +101,11 @@ public class CompanyFacade extends ClientFacade {
 	}
 	public ArrayList<Coupon> getCompanyCoupons()
 	{
-		return m_coupons.getAllCouponsByCompanyID(this.m_companyID);
+		return m_companies.getAllCouponsByCompanyID(this.m_companyID);
 	}
 	public ArrayList<Coupon> getCompanyCoupons(Category category)
 	{
-		ArrayList<Coupon> tempCoupons = m_coupons.getAllCouponsByCompanyID(this.m_companyID);
+		ArrayList<Coupon> tempCoupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		for(Coupon var:tempCoupons)
 		{
@@ -118,7 +118,7 @@ public class CompanyFacade extends ClientFacade {
 	}
 	public ArrayList<Coupon> getCompanyCoupons(double maxPrice)
 	{
-		ArrayList<Coupon> tempCoupons = m_coupons.getAllCouponsByCompanyID(this.m_companyID);
+		ArrayList<Coupon> tempCoupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		for(Coupon var:tempCoupons)
 		{

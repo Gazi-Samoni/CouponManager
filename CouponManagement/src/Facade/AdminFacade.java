@@ -94,7 +94,7 @@ public class AdminFacade extends ClientFacade {
 
 			//Delete from customers_vs_coupons table
 			
-			m_coupons.executeQueryByID(couponID);
+			m_coupons.deleteCouponByID(couponID);
 			
 
 		} 
@@ -130,10 +130,17 @@ public class AdminFacade extends ClientFacade {
 	{
 		ArrayList<Coupon> coupons = this.m_customers.getOneCustomer(customerID).getCoupons();
 		//delete from customer_vs_coupon table
-		for(Coupon var:coupons)
+		if(coupons == null)
 		{
-			this.m_coupons.deleteCopounPurchase(customerID, var.getID());
+			System.out.println("no coupons purchase for : " + customerID);
 		}
+		else {
+			for(Coupon var:coupons)
+			{
+				this.m_coupons.deleteCopounPurchase(customerID, var.getID());
+			}
+		}
+	
 		this.m_customers.deleteCustomer(customerID);
 	}
 	public ArrayList<Customer> getAllCustomer()

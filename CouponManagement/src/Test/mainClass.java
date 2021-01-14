@@ -49,10 +49,11 @@ public class mainClass {
 		java.sql.Date date = new java.sql.Date(millis);
 	
 		//create coupons
-		Coupon coupon = new Coupon(31,company.getID(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
-		
-		CouponsDAO couponsDAO = new CouponsDBDAO();
-		couponsDAO.addCoupon(coupon);
+		Coupon coupon = new Coupon(51,company.getID(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(52,company.getID(),Category.Electricity,"AC1","test31",date,date,5,3.6,"temp");
+		CompanyFacade companyFacade = new CompanyFacade(company.getID());
+		companyFacade.addCoupon(coupon);
+		companyFacade.addCoupon(coupon2);
 		
 		
 		//create customers
@@ -65,10 +66,14 @@ public class mainClass {
 		//add customer	
 		adminFacade.addCustomer(customer);
 		
-		couponsDAO.addCopounPurchase(customer.getId(), coupon.getID());
-		//delete 
-		/*adminFacade.deleteCompany(company3.get_id());
-		*/
+		CustomerFacade customerFacade = new CustomerFacade(customer.getId());
+		customerFacade.purchaseCoupon(coupon);
+		customerFacade.purchaseCoupon(coupon2);
+		
+		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(0).getID());
+		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(1).getID());
+		
+				//delete 
 		ArrayList<Company> companies = adminFacade.getAllCompanies();
 		System.out.println(companies.get(0).toString());
 		
@@ -77,14 +82,12 @@ public class mainClass {
 		System.out.println(company4.toString());
 		
 		
-		
-		
 		//update customer
 		customer.setLastName("magregor");
 		adminFacade.updateCustomer(customer);
 		
 		//delete customer
-		adminFacade.deleteCustomer(customer2.getId());
+		
 		
 		//get all customers
 		ArrayList<Customer> customers = adminFacade.getAllCustomer();
@@ -93,7 +96,10 @@ public class mainClass {
 		Customer customer3 = adminFacade.getOneCustomer(customer2.getId());
 		System.out.println(customer3.toString());
 		
-	
+		//delete
+		//adminFacade.deleteCustomer(customer.getId());
+		adminFacade.deleteCompany(company.getID());
+		
 		
 			
 	}

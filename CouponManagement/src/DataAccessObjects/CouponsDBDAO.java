@@ -33,7 +33,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void updateCoupon(Coupon coupon) {
 		Connection connection=null;
-		String query = "UPADTE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
+		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ coupon.getCategory() +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -93,32 +93,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		
 		return coupons;
 	}
-	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID){
-		Connection connection=null;
-		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		String query = "SELECT * FROM `project.1`.`coupons` WHERE ID = '"+ companyID + "';";
-		
-		try {
-			connection = m_connectionPool.getConnection();
-			ResultSet couponsTable = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-			while(couponsTable.next())
-			{
-				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
-				coupons.add(coupon);
-			}
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		finally {
-			if(connection != null)
-			{
-				m_connectionPool.restoreConnection(connection);
-			}
-		}
-		
-		return coupons;
-	}
+	
 	
 	public Coupon getOneCoupon(int couponID) {
 		Connection connection=null;
@@ -154,6 +129,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
+			
 		} catch (SQLException e) {
 			
 			System.out.println(e.getMessage());
@@ -169,7 +145,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void deleteCopounPurchase(int customerID, int couponID) {
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "', CUSTOMER_ID = '" + customerID + "');";
+		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "' AND CUSTOMER_ID = '" + customerID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
@@ -199,32 +175,12 @@ public class CouponsDBDAO implements CouponsDAO {
 		
 		return customerVScoupon;
 	}
-	public ResultSet getCustomerVsCouponTableByCutomerID(int customerID)
-	{
-		Connection connection=null;
-		ResultSet customerVScoupon = null;
-		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE (CUSTOMER_ID = '" + customerID + "');";
-		
-		try {
-			connection = m_connectionPool.getConnection();
-			customerVScoupon = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		finally {
-			if(connection != null)
-			{
-				m_connectionPool.restoreConnection(connection);
-			}
-		}
-		
-		return customerVScoupon;
-	}
 	
-	public void executeQueryByID(int couponID)
+	
+	public void deleteCouponByID(int couponID)
 	{
 		Connection connection=null;
-		String query = "DELETE * FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
+		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
