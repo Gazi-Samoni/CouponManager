@@ -2,14 +2,18 @@ package Test;
 
 import Facade.*;
 import JavaBeans.*;
+import Job.CouponExpiraitionDailyJob;
 import Table.DeleteDB;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import DataAccessObjects.*;
 
 public class mainClass {
 	public static void main(String[] args)
 	{
+		(new CouponExpiraitionDailyJob()).run();
+		
 		DeleteDB.deleteDBTables();
 		
 		AdminFacade adminFacade = new AdminFacade();
@@ -54,6 +58,7 @@ public class mainClass {
 		//create coupons
 		Coupon coupon = new Coupon(51,company.getID(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
 		Coupon coupon2 = new Coupon(52,company.getID(),Category.Electricity,"AC1","test31",date,date,5,3.6,"temp");
+		Coupon coupon3 = new Coupon(51,company.getID(),Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
 		CompanyFacade companyFacade = new CompanyFacade(company.getID());
 		companyFacade.addCoupon(coupon);
 		companyFacade.addCoupon(coupon2);
@@ -76,7 +81,7 @@ public class mainClass {
 		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(0).getID());
 		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(1).getID());
 		
-				//delete 
+		//delete 
 		ArrayList<Company> companies = adminFacade.getAllCompanies();
 		System.out.println(companies.get(0).toString());
 		

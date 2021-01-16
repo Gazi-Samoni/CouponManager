@@ -75,8 +75,7 @@ public class AdminFacade extends ClientFacade {
 	private void deleteCouponFromCustomerHistory(int couponID) {
 		ResultSet customerVsCouponTable=null;
 		
-		try {	
-			
+		try {		
 			customerVsCouponTable = m_coupons.getCustomerVsCouponTableByCouponID(couponID);
 			
 			while(customerVsCouponTable.next())
@@ -90,21 +89,9 @@ public class AdminFacade extends ClientFacade {
 						customerCoupons.remove(i);
 					}
 				}
-				/* to ask dawod
-				for(Coupon var:customerCoupons)
-				{
-					if(var.getID() == couponID ) 
-					{
-						customerCoupons.remove(var);
-					}
-				}*/
 			}
-
-			//Delete from customers_vs_coupons table
-			
-			m_coupons.deleteCouponByID(couponID);
-			
-
+			//Delete from customers_vs_coupons table			
+			m_coupons.deleteCouponFromCustomerVsCouponTableByID(couponID);
 		} 
 		catch (SQLException e) {
 			System.out.println(e.getMessage());

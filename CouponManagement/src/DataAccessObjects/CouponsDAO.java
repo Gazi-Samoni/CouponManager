@@ -12,7 +12,7 @@ public interface CouponsDAO {
 	public void addCopounPurchase(int customerID, int couponID);
 	public void deleteCopounPurchase(int customerID, int couponID);
 	public ResultSet getCustomerVsCouponTableByCouponID(int couponID);
-	public void deleteCouponByID(int couponID);
+	public void deleteCouponFromCustomerVsCouponTableByID(int couponID);
 	
 }
 

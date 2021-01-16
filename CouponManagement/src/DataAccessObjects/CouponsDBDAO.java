@@ -177,7 +177,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	
 	
-	public void deleteCouponByID(int couponID)
+	public void deleteCouponFromCustomerVsCouponTableByID(int couponID)
 	{
 		Connection connection=null;
 		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
