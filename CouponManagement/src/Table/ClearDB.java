@@ -4,11 +4,11 @@ import java.sql.SQLException;
 
 import ConnectionUtils.*;
 
-public class DeleteDB {
+public class ClearDB {
 	
 	public static ConnectionPool m_connectionPool = ConnectionPool.getInstance() ; 
 	
-	public static void deleteDBTables(){
+	public static void ClearDBTables(){
 		
 		Connection connection = null;
 		String query;
