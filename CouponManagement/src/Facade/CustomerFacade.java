@@ -24,15 +24,6 @@ public class CustomerFacade extends ClientFacade  {
 	}
 	public void purchaseCoupon(Coupon coupon)
 	{
-	
-		/*
-		if(coupons != null) {
-			if(coupons.contains(coupon)) {
-				purchased = true;
-			}
-		}
-		*/
-		
 		boolean purchased = false;
 		ResultSet customerVScoupon = m_customers.getCustomerVsCouponTableByCutomerID(this.m_customerID);
 		
@@ -72,7 +63,6 @@ public class CustomerFacade extends ClientFacade  {
 			}
 		}
 	}
-	
 
 	private boolean isVaildCouponDate(Date endDate) {
 
@@ -81,12 +71,12 @@ public class CustomerFacade extends ClientFacade  {
 				
 		return endDate.before(NowDate);
 	}
-	public ArrayList<Coupon> getCustomerCopons(){
+	public ArrayList<Coupon> getCustomerCoupons(){
 	
 		return m_customers.getCustomerCoupons(this.m_customerID);
 	}
-	public ArrayList<Coupon> getCustomerCopons(Category category){
-		ArrayList<Coupon> coupons = getCustomerCopons();
+	public ArrayList<Coupon> getCustomerCoupons(Category category){
+		ArrayList<Coupon> coupons = getCustomerCoupons();
 		for(Coupon var:coupons)
 		{
 			if(var.getCategory() != category)
@@ -97,8 +87,8 @@ public class CustomerFacade extends ClientFacade  {
 		return coupons;
 		
 	}
-	public ArrayList<Coupon> getCustomerCopons(double maxPrice){
-		ArrayList<Coupon> coupons = getCustomerCopons();
+	public ArrayList<Coupon> getCustomerCoupons(double maxPrice){
+		ArrayList<Coupon> coupons = getCustomerCoupons();
 		for(Coupon var:coupons)
 		{
 			if(var.getPrice() > maxPrice)
@@ -112,7 +102,7 @@ public class CustomerFacade extends ClientFacade  {
 	public Customer getCustomerDetails(){
 		Customer customer= m_customers.getOneCustomer(this.m_customerID);
 		
-		customer.setCoupons(this.getCustomerCopons());
+		customer.setCoupons(this.getCustomerCoupons());
 	
 		return customer;
 			

@@ -20,6 +20,8 @@ public class mainClass {
 		
 		ClearDB.ClearDBTables();
 		
+		loginManager.login(email, password, clientType)
+		
 
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
@@ -28,21 +30,6 @@ public class mainClass {
 		Coupon coupon = new Coupon(51,21,Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
 		Coupon coupon2 = new Coupon(52,23,Category.Food,"AC1","test31",date,date,5,3.6,"temp");
 		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"AC","test1",date,date,5,3.6,"temp");
-		
-		
-		
-		companyFacade.addCoupon(coupon);
-		companyFacade.addCoupon(coupon2);
-		
-		
-		
-		
-		CustomerFacade customerFacade = new CustomerFacade(customer.getId());
-		customerFacade.purchaseCoupon(coupon);
-		customerFacade.purchaseCoupon(coupon2);
-		
-		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(0).getID());
-		System.out.println(customerFacade.getCustomerDetails().getCoupons().get(1).getID());
 		
 
 				
@@ -150,24 +137,80 @@ public class mainClass {
 			Coupon coupon2 = new Coupon(55,23,Category.Food,"AC","amdocs from companyUserTest",date,date,3,3.6,"temp");
 			companyFacade.addCoupon(coupon2);	
 		
+		//Update coupon
 		coupon.setAmount(10);
 		coupon.setDescription("amdocs after edit");
 		companyFacade.updateCoupon(coupon);
 		
+		//Delete coupon
+		companyFacade.deleteCoupon(coupon.getID());
 		
+		//Get All Coupons
+		ArrayList<Coupon> coupons = companyFacade.getCompanyCoupons();	
+		for(Coupon var:coupons)
+		{
+			System.out.println(var.toString());
+		}
+		//Get All Coupons by category
+		ArrayList<Coupon> coupons2 = companyFacade.getCompanyCoupons(Category.Restaurant);	
+		for(Coupon var:coupons2)
+		{
+			System.out.println(var.toString());
+		}
 		
+		//Get All Coupons by category
+		ArrayList<Coupon> coupons3 = companyFacade.getCompanyCoupons(70);	
+		for(Coupon var:coupons3)
+		{
+			System.out.println(var.toString());
+		}
 		
-		
-		
+		//Get Company details
+		Company company = companyFacade.getCompanyDetails();
+		System.out.println(company.toString());
 		
 	}
 	void CustomerUserTest(CustomerFacade customerFacade)
 	{
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
-		Coupon coupon = new Coupon(54,21,Category.Vacation,"AC","amdocs from companyUserTest ",date,date,5,3.6,"temp");
-		customerFacade.purchaseCoupon(coupon);
+		@SuppressWarnings("deprecation")
+		java.sql.Date dateExpierd = new java.sql.Date(1,1,2020);
 		
+		Coupon coupon = new Coupon(54,21,Category.Vacation,"AC","amdocs from CustomerUserTest ",date,date,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(54,21,Category.Food,"AB","amdocs from CustomerUserTest->zero amount ",date,date,0,3.6,"temp");
+		Coupon coupon3 = new Coupon(54,21,Category.Food,"AB","amdocs from CustomerUserTest->expierd date ",date,dateExpierd,0,3.6,"temp");
+		//Purchase Coupon
+		customerFacade.purchaseCoupon(coupon);
+			//repurchase same coupon ->fails
+			customerFacade.purchaseCoupon(coupon);
+			//Purchase Coupon with amount 0 -> fails
+			customerFacade.purchaseCoupon(coupon2);
+			//Purchase Coupon with expired date -> fails
+			customerFacade.purchaseCoupon(coupon3);
+		
+		
+		//Get customer coupons
+		ArrayList<Coupon> custumerCoupons = customerFacade.getCustomerCoupons();
+		for(Coupon var:custumerCoupons)
+		{
+			System.out.println(var.toString());
+		}
+		//Get customer coupons by Category
+		ArrayList<Coupon> custumerCoupons2 = customerFacade.getCustomerCoupons(Category.Food);
+		for(Coupon var:custumerCoupons2)
+		{
+			System.out.println(var.toString());
+		}
+		//Get customer coupons by max price
+		ArrayList<Coupon> custumerCoupons3 = customerFacade.getCustomerCoupons(20);
+		for(Coupon var:custumerCoupons3)
+		{
+			System.out.println(var.toString());
+		}
+		//Get customer details
+		Customer customer = customerFacade.getCustomerDetails();
+		System.out.println(customer.toString());
 		
 	}
 	
