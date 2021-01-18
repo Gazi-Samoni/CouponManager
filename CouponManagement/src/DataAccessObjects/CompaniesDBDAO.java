@@ -55,12 +55,11 @@ public class CompaniesDBDAO implements CompaniesDAO{
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
-		
 	}
 	
 	public void updateCompany(Company company) { // reverse name set
 		Connection connection = null;
-		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE ('ID' = '" + company.getID() + "');\r\n";
+		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE (ID = '" + company.getID() + "');\r\n";
 		
 		try {
 			connection = m_connectionPool.getConnection();

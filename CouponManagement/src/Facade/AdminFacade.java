@@ -30,7 +30,7 @@ public class AdminFacade extends ClientFacade {
 		else 
 		{
 			this.m_companies.addCompany(company);
-			System.out.println("added");
+			System.out.println("company added");
 		}
 	}
 	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
@@ -51,6 +51,7 @@ public class AdminFacade extends ClientFacade {
 			else
 			{
 				this.m_companies.updateCompany(company);
+				System.out.println("company updated");
 			}
 		}
 	}
@@ -60,6 +61,7 @@ public class AdminFacade extends ClientFacade {
 		ArrayList<Coupon> coupons = company.getCoupons();
 		deleteCouponsHistory(coupons);
 		this.m_companies.deleteCompany(companyID);
+		System.out.println("company deleted");
 	}
 	private void deleteCouponsHistory(ArrayList<Coupon> coupons) {
 		Coupon coupon;

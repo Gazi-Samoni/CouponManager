@@ -7,42 +7,29 @@ import Login.ClientType;
 import Login.LoginManager;
 import Table.ClearDB;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import DataAccessObjects.*;
 
 public class mainClass {
 	public static void main(String[] args)
 	{
-		(new CouponExpiraitionDailyJob()).run();
+		//(new CouponExpiraitionDailyJob()).run();
 		
-		
+		//ClearDB.ClearDBTables();
 		LoginManager loginManager  = LoginManager.getInstance();
-		
-		ClearDB.ClearDBTables();
-		
-		
-		AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
-		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
-		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","admin", ClientType.Customer);
 
 		
-		long millis=System.currentTimeMillis(); 
-		java.sql.Date date = new java.sql.Date(millis);
-	
-		//create coupons
-		Coupon coupon = new Coupon(51,21,Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(52,23,Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
-		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"coupon3","test1",date,date,5,3.6,"temp");
-		companyFacade.addCoupon(coupon);
-		companyFacade.addCoupon(coupon2);
-		companyFacade.addCoupon(coupon3);
+		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
 		
+		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
+		//CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
+
 		
-		administratorUserTest(adminFacde);
+		//administratorUserTest(adminFacde);
 		companyUserTest(companyFacade);
-		CustomerUserTest(customerFacade);	
+		//CustomerUserTest(customerFacade);	
 	}
+	
+	//to fix exceptions message
 	static void administratorUserTest(AdminFacade adminFacade)
 	{
 		System.out.println("------------------Administrator Test------------------");
@@ -56,7 +43,23 @@ public class mainClass {
 		Company company3 = new Company(23,"Microsoft","Microsoft@Microsoft.com","1234");
 		adminFacade.addCompany(company);
 		adminFacade.addCompany(company2);
-		adminFacade.addCompany(company3);		
+		adminFacade.addCompany(company3);	
+		
+		
+		//to delete
+		long millis=System.currentTimeMillis(); 
+		java.sql.Date date = new java.sql.Date(millis);
+		CompanyFacade companyFacade = new CompanyFacade(21);
+		//create coupons
+		Coupon coupon = new Coupon(51,21,Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(52,21,Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
+		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"coupon3","test1",date,date,5,3.6,"temp");
+		companyFacade.addCoupon(coupon);
+		companyFacade.addCoupon(coupon2);
+		companyFacade.addCoupon(coupon3);
+		
+		
+		
 		//Failure test 
 			//exists name
 			Company company4 = new Company(24,"Amdocs","a@a.com","1234");	

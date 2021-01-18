@@ -32,7 +32,7 @@ public class CompanyFacade extends ClientFacade {
 			}
 			else
 			{
-				System.out.println(coupon.getTitle() + "`s coupon already exists");
+				System.out.println(coupon.getTitle() + "`s title already exists");
 			}
 		}
 		else
