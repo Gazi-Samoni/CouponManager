@@ -3,6 +3,7 @@ package Test;
 import Facade.*;
 import JavaBeans.*;
 import Job.CouponExpiraitionDailyJob;
+import Login.ClientType;
 import Login.LoginManager;
 import Table.ClearDB;
 
@@ -20,21 +21,29 @@ public class mainClass {
 		
 		ClearDB.ClearDBTables();
 		
-		loginManager.login(email, password, clientType)
 		
+		AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
+		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
+		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","admin", ClientType.Customer);
 
+		
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
 	
 		//create coupons
-		Coupon coupon = new Coupon(51,21,Category.Electricity,"AC","test1",date,date,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(52,23,Category.Food,"AC1","test31",date,date,5,3.6,"temp");
-		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"AC","test1",date,date,5,3.6,"temp");
+		Coupon coupon = new Coupon(51,21,Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(52,23,Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
+		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"coupon3","test1",date,date,5,3.6,"temp");
+		companyFacade.addCoupon(coupon);
+		companyFacade.addCoupon(coupon2);
+		companyFacade.addCoupon(coupon3);
 		
-
-				
+		
+		administratorUserTest(adminFacde);
+		companyUserTest(companyFacade);
+		CustomerUserTest(customerFacade);	
 	}
-	void administratorUserTest(AdminFacade adminFacade)
+	static void administratorUserTest(AdminFacade adminFacade)
 	{
 		System.out.println("------------------Administrator Test------------------");
 		
@@ -87,13 +96,13 @@ public class mainClass {
 		
 		
 		//Add new customers
-		Customer customer = new Customer(31,"Abed","shalgam","a@b.com","1234");
-		Customer customer2 = new Customer(32,"Gazi","Samoni","b@c.com","1234");
+		Customer customer = new Customer(31,"Abed","shalgam","abed@gmail.com","1234");
+		Customer customer2 = new Customer(32,"Gazi","Samoni","gazi@gmail.com","1234");
 		adminFacade.addCustomer(customer);
 		adminFacade.addCustomer(customer2);
 		
 		//add customer with exists email	
-		Customer customer3 = new Customer(32,"john","kyle","b@c.com","1234");
+		Customer customer3 = new Customer(32,"john","kyle","john@gmail.com","1234");
 		adminFacade.addCustomer(customer3);
 		
 		//update customer
@@ -120,7 +129,7 @@ public class mainClass {
 		System.out.println(customer4.toString());
 		
 	}
-	void companyUserTest(CompanyFacade companyFacade )
+	static void companyUserTest(CompanyFacade companyFacade )
 	{	
 		System.out.println("------------------Company Test------------------");
 		//Login
@@ -131,10 +140,10 @@ public class mainClass {
 		//Add Coupon
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
-		Coupon coupon = new Coupon(54,21,Category.Vacation,"AC","amdocs from companyUserTest ",date,date,5,3.6,"temp");
+		Coupon coupon = new Coupon(54,21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 			//Same Title -> failed
-			Coupon coupon2 = new Coupon(55,23,Category.Food,"AC","amdocs from companyUserTest",date,date,3,3.6,"temp");
+			Coupon coupon2 = new Coupon(55,23,Category.Food,"coupon2","amdocs from companyUserTest",date,date,3,3.6,"temp");
 			companyFacade.addCoupon(coupon2);	
 		
 		//Update coupon
@@ -170,7 +179,7 @@ public class mainClass {
 		System.out.println(company.toString());
 		
 	}
-	void CustomerUserTest(CustomerFacade customerFacade)
+	static void CustomerUserTest(CustomerFacade customerFacade)
 	{
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
