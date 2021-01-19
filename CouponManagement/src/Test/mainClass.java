@@ -9,6 +9,8 @@ import Table.ClearDB;
 
 import java.util.*;
 
+import DataAccessObjects.CouponsDBDAO;
+
 public class mainClass {
 	public static void main(String[] args)
 	{
@@ -20,17 +22,19 @@ public class mainClass {
 		
 		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
 		
-		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
-		//CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
+		//CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
+		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
 
 		
 		//administratorUserTest(adminFacde);
-		companyUserTest(companyFacade);
-		//CustomerUserTest(customerFacade);	
+		//companyUserTest(companyFacade);
+		CustomerUserTest(customerFacade);	
 	}
 	
 	//to fix exceptions message
+		
 	static void administratorUserTest(AdminFacade adminFacade)
+
 	{
 		System.out.println("------------------Administrator Test------------------");
 		
@@ -132,6 +136,7 @@ public class mainClass {
 		System.out.println(customer4.toString());
 		
 	}
+	
 	static void companyUserTest(CompanyFacade companyFacade )
 	{	
 		System.out.println("------------------Company Test------------------");
@@ -146,7 +151,7 @@ public class mainClass {
 		Coupon coupon = new Coupon(54,21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 			//Same Title -> failed
-			Coupon coupon2 = new Coupon(55,23,Category.Food,"coupon2","amdocs from companyUserTest",date,date,3,3.6,"temp");
+			Coupon coupon2 = new Coupon(55,21,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
 			companyFacade.addCoupon(coupon2);	
 		
 		//Update coupon
@@ -182,6 +187,7 @@ public class mainClass {
 		System.out.println(company.toString());
 		
 	}
+	
 	static void CustomerUserTest(CustomerFacade customerFacade)
 	{
 		long millis=System.currentTimeMillis(); 
@@ -190,8 +196,15 @@ public class mainClass {
 		java.sql.Date dateExpierd = new java.sql.Date(1,1,2020);
 		
 		Coupon coupon = new Coupon(54,21,Category.Vacation,"AC","amdocs from CustomerUserTest ",date,date,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(54,21,Category.Food,"AB","amdocs from CustomerUserTest->zero amount ",date,date,0,3.6,"temp");
-		Coupon coupon3 = new Coupon(54,21,Category.Food,"AB","amdocs from CustomerUserTest->expierd date ",date,dateExpierd,0,3.6,"temp");
+		Coupon coupon2 = new Coupon(56,21,Category.Food,"AB","amdocs from CustomerUserTest->zero amount ",date,date,0,3.6,"temp");
+		Coupon coupon3 = new Coupon(57,21,Category.Food,"AB","amdocs from CustomerUserTest->expierd date ",date,dateExpierd,80,3.6,"temp");
+		
+		CouponsDBDAO tester = new CouponsDBDAO();
+		tester.addCoupon(coupon);
+		tester.addCoupon(coupon2);
+		tester.addCoupon(coupon3);
+		
+		
 		//Purchase Coupon
 		customerFacade.purchaseCoupon(coupon);
 			//repurchase same coupon ->fails
@@ -208,12 +221,20 @@ public class mainClass {
 		{
 			System.out.println(var.toString());
 		}
+		
+		System.out.println("");
+		
+		
 		//Get customer coupons by Category
 		ArrayList<Coupon> custumerCoupons2 = customerFacade.getCustomerCoupons(Category.Food);
+		
+		System.out.println("syso w2shrb myto");
+		
 		for(Coupon var:custumerCoupons2)
 		{
 			System.out.println(var.toString());
 		}
+		System.out.println("");
 		//Get customer coupons by max price
 		ArrayList<Coupon> custumerCoupons3 = customerFacade.getCustomerCoupons(20);
 		for(Coupon var:custumerCoupons3)

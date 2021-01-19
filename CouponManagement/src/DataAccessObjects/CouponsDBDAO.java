@@ -33,7 +33,8 @@ public class CouponsDBDAO implements CouponsDAO {
 	
 	public void updateCoupon(Coupon coupon) {
 		Connection connection=null;
-		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ Category.ToInt(coupon.getCategory()) +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +"' WHERE (ID = '" + coupon.getID() + "');";
+		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ Category.ToInt(coupon.getCategory()) +"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() +
+				"', START_DATE = '"+ coupon.getStartDate() +"', END_DATE = '"+ coupon.getEndDate() +"', AMOUNT = '"+ coupon.getAmount() +"', PRICE = '"+ coupon.getPrice() +"', IMAGE = '"+ coupon.getImage() +"' WHERE (ID = '" + coupon.getID() + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -183,7 +184,7 @@ public class CouponsDBDAO implements CouponsDAO {
 		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
-			connection.createStatement().executeUpdate(query);
+			connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(query);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -193,6 +194,34 @@ public class CouponsDBDAO implements CouponsDAO {
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
+	}
+
+	@Override
+	public boolean isCouponExist(int couponID) {
+		boolean isExist = true;
+		Connection connection = null;
+		String query = "SELECT * FROM `project.1`.`coupons` WHERE (ID = '" + couponID + "');";
+		ResultSet couponSet = null;
+		
+		try {
+			connection = m_connectionPool.getConnection();
+			couponSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			if(couponSet.next() == false)
+			{
+				isExist = false;
+			}
+		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
+		
+		return isExist;
 	}
 
 }

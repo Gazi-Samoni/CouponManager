@@ -69,7 +69,7 @@ public class CustomerFacade extends ClientFacade  {
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date NowDate = new java.sql.Date(millis);
 				
-		return endDate.before(NowDate);
+		return endDate.after(NowDate);
 	}
 	public ArrayList<Coupon> getCustomerCoupons(){
 	
@@ -77,13 +77,15 @@ public class CustomerFacade extends ClientFacade  {
 	}
 	public ArrayList<Coupon> getCustomerCoupons(Category category){
 		ArrayList<Coupon> coupons = getCustomerCoupons();
-		for(Coupon var:coupons)
-		{
-			if(var.getCategory() != category)
+		
+		for (int i = 0; i < coupons.size(); i++) {
+			if(coupons.get(i).getCategory() != category)
 			{
-				coupons.remove(var);
+				coupons.remove(i);
 			}
 		}
+		
+		
 		return coupons;
 		
 	}

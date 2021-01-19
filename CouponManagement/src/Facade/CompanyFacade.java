@@ -29,6 +29,7 @@ public class CompanyFacade extends ClientFacade {
 			if(isCouponTitleExists(coupon)==false)
 			{
 				m_coupons.addCoupon(coupon);
+				System.out.println("coupon added.");
 			}
 			else
 			{
@@ -61,13 +62,18 @@ public class CompanyFacade extends ClientFacade {
 		{
 			System.out.println("Can't change Company id");
 		}
-		else if(isCouponTitleExists(coupon))
+		
+		
+		else if(!m_coupons.isCouponExist(coupon.getID()))
 		{
-			System.out.println("The coupon: "+ coupon.getTitle() +" already exists");
+			System.out.println("invalid coupon ID");
 		}
+		
 		else
 		{
-			m_coupons.addCoupon(coupon);
+			m_coupons.updateCoupon(coupon);
+			System.out.println("coupon updated.");
+			
 		}
 	}
 	public void deleteCoupon(int couponID)
@@ -80,7 +86,7 @@ public class CompanyFacade extends ClientFacade {
 				int currCouponID = customerVsCouponTable.getInt(2);
 				if(currCouponID == couponID)
 				{
-					m_coupons.deleteCopounPurchase(currCouponID, customerVsCouponTable.getInt(1));
+					m_coupons.deleteCopounPurchase(customerVsCouponTable.getInt(1), currCouponID);
 				}
 			}
 		} catch (SQLException e) {
@@ -95,8 +101,11 @@ public class CompanyFacade extends ClientFacade {
 			if(var.getID() == couponID)
 			{
 				coupons.remove(var);
+				System.out.println("coupon : "+ couponID +" removed");
 			}
 		}
+		
+		m_coupons.deleteCoupon(couponID);
 		
 	}
 	public ArrayList<Coupon> getCompanyCoupons()

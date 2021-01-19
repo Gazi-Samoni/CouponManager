@@ -13,6 +13,7 @@ public interface CouponsDAO {
 	public void deleteCopounPurchase(int customerID, int couponID);
 	public ResultSet getCustomerVsCouponTableByCouponID(int couponID);
 	public void deleteCouponFromCustomerVsCouponTableByID(int couponID);
+	public boolean isCouponExist(int id);
 	
 }
 
