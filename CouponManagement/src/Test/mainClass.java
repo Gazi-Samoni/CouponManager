@@ -22,20 +22,18 @@ public class mainClass {
 		
 		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
 		
-		//CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Amdocs@Amdocs.com","1234", ClientType.Company);
-		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
+		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
+		//CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
 
 		
 		//administratorUserTest(adminFacde);
-		//companyUserTest(companyFacade);
-		CustomerUserTest(customerFacade);	
+		companyUserTest(companyFacade);
+		//CustomerUserTest(customerFacade);	
 	}
 	
 	//to fix exceptions message
 		
-	static void administratorUserTest(AdminFacade adminFacade)
-
-	{
+	static void administratorUserTest(AdminFacade adminFacade){
 		System.out.println("------------------Administrator Test------------------");
 		
 		//Login
@@ -148,6 +146,12 @@ public class mainClass {
 		//Add Coupon
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
+		
+		Coupon coupon41 = new Coupon(22,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
+		companyFacade.addCoupon(coupon41);	
+		System.out.println("added");
+		/*
+		
 		Coupon coupon = new Coupon(54,21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 			//Same Title -> failed
@@ -185,7 +189,7 @@ public class mainClass {
 		//Get Company details
 		Company company = companyFacade.getCompanyDetails();
 		System.out.println(company.toString());
-		
+		*/
 	}
 	
 	static void CustomerUserTest(CustomerFacade customerFacade)

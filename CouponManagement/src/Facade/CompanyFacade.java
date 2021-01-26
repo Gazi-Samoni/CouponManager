@@ -7,7 +7,6 @@ import java.util.*;
 public class CompanyFacade extends ClientFacade {
 	private int m_companyID;
 	
-
 	public int getCompanyID() {
 		return m_companyID;
 	}
@@ -16,14 +15,12 @@ public class CompanyFacade extends ClientFacade {
 		m_companyID = companyID;
 	}
 	public CompanyFacade() {}
-	
 	@Override
 	public boolean login(String email, String password) {
 		
 		return m_companies.isCompanyExists(email, password);
 	}
-	public void addCoupon(Coupon coupon)
-	{
+	public void addCoupon(Coupon coupon){
 		if(coupon.getCompanyID() == m_companyID)
 		{
 			if(isCouponTitleExists(coupon)==false)
@@ -42,8 +39,7 @@ public class CompanyFacade extends ClientFacade {
 		}
 		
 	}
-	private boolean isCouponTitleExists(Coupon coupon)
-	{
+	private boolean isCouponTitleExists(Coupon coupon){
 		ArrayList<Coupon> coupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		boolean isExists= false;
 		for(Coupon var:coupons)
@@ -56,28 +52,21 @@ public class CompanyFacade extends ClientFacade {
 		return isExists;
 		
 	}
-	public void updateCoupon(Coupon coupon)
-	{
-		if(coupon.getCompanyID() != this.m_companyID)
-		{
+	public void updateCoupon(Coupon coupon){
+		
+		if(coupon.getCompanyID() != this.m_companyID){
 			System.out.println("Can't change Company id");
 		}
-		
-		
-		else if(!m_coupons.isCouponExist(coupon.getID()))
-		{
+		else if(!m_coupons.isCouponExist(coupon.getID())){
 			System.out.println("invalid coupon ID");
 		}
-		
-		else
-		{
+		else{
 			m_coupons.updateCoupon(coupon);
 			System.out.println("coupon updated.");
-			
 		}
 	}
-	public void deleteCoupon(int couponID)
-	{
+	public void deleteCoupon(int couponID){
+		
 		ResultSet customerVsCouponTable = m_coupons.getCustomerVsCouponTableByCouponID(couponID);
 		
 		try {
@@ -106,14 +95,11 @@ public class CompanyFacade extends ClientFacade {
 		}
 		
 		m_coupons.deleteCoupon(couponID);
-		
 	}
-	public ArrayList<Coupon> getCompanyCoupons()
-	{
+	public ArrayList<Coupon> getCompanyCoupons(){
 		return m_companies.getAllCouponsByCompanyID(this.m_companyID);
 	}
-	public ArrayList<Coupon> getCompanyCoupons(Category category)
-	{
+	public ArrayList<Coupon> getCompanyCoupons(Category category){
 		ArrayList<Coupon> tempCoupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		for(Coupon var:tempCoupons)
@@ -125,8 +111,7 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	public ArrayList<Coupon> getCompanyCoupons(double maxPrice)
-	{
+	public ArrayList<Coupon> getCompanyCoupons(double maxPrice){
 		ArrayList<Coupon> tempCoupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		for(Coupon var:tempCoupons)
@@ -138,15 +123,10 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	public Company getCompanyDetails()
-	{
+	public Company getCompanyDetails(){
 		return m_companies.getOneCompany(this.m_companyID);
 	}
-	
 	public void setID(int companyID) {
 		m_companyID = companyID;
 	}
-	
-
-	
 }

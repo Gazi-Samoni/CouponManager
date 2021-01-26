@@ -38,7 +38,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		
 		return isExist;
 	}
-
 	public void addCompany(Company company) {
 		Connection connection = null;
 		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.getID()  +"', '"+ company.getName() +"', '"+ company.getEmail() + "', '" + company.getPassword() + "');\r\n";
@@ -56,7 +55,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			}
 		}
 	}
-	
 	public void updateCompany(Company company) { // reverse name set
 		Connection connection = null;
 		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE (ID = '" + company.getID() + "');\r\n";
@@ -74,7 +72,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			}
 		}
 	}
-
 	public void deleteCompany(int companyID) {
 		Connection connection = null;
 		String query = "DELETE FROM `project.1`.`companies` WHERE (ID = '" + companyID + "');";
@@ -92,7 +89,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			}
 		}
 	}
-	
 	public ArrayList<Company> getAllCompanies(){
 		Connection connection = null;
 		String query = "SELECT * FROM `project.1`.`companies` ;\r\n";
@@ -122,7 +118,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			
 		return companies;
 	}
-	//new
 	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID){
 		Connection connection=null;
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
@@ -131,8 +126,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			connection = m_connectionPool.getConnection();
 			ResultSet couponsTable = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-			while(couponsTable.next())
-			{
+			while(couponsTable.next()){
 				Coupon coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
 				coupons.add(coupon);
 			}
@@ -141,15 +135,13 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(connection != null)
-			{
+			if(connection != null){
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
 		
 		return coupons;
 	}
-	
 	public Company getOneCompany(int companyID) {
 		Connection connection=null;
 		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = '" + companyID + "';";
@@ -168,8 +160,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(connection != null)
-			{
+			if(connection != null){
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
@@ -184,16 +175,14 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			connection = m_connectionPool.getConnection();
 			companiesSet =connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-			if(companiesSet.next() == false)
-			{
+			if(companiesSet.next() == false){
 				return false;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(connection != null)
-			{
+			if(connection != null){
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
@@ -208,16 +197,14 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		try {
 			connection = m_connectionPool.getConnection();
 			companiesSet = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
-			if(companiesSet.next() == false)
-			{
+			if(companiesSet.next() == false){
 				return false;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(connection != null)
-			{
+			if(connection != null){
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
@@ -239,8 +226,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(connection != null)
-			{
+			if(connection != null){
 				m_connectionPool.restoreConnection(connection);
 			}
 		}
@@ -248,7 +234,6 @@ public class CompaniesDBDAO implements CompaniesDAO{
 		return company;
 		
 	}
-
 	@Override
 	public int getCompanyIdByEmailAndPassword(String email, String password) {
 		// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
