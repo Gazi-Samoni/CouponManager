@@ -7,37 +7,25 @@ import java.util.*;
 public class CompanyFacade extends ClientFacade {
 	private int m_companyID;
 	
-	public int getCompanyID() {
-		return m_companyID;
-	}
-	public CompanyFacade(int companyID)
-	{
-		m_companyID = companyID;
-	}
-	public CompanyFacade() {}
+	
+
 	@Override
 	public boolean login(String email, String password) {
 		
 		return m_companies.isCompanyExists(email, password);
 	}
 	public void addCoupon(Coupon coupon){
-		if(coupon.getCompanyID() == m_companyID)
-		{
-			if(isCouponTitleExists(coupon)==false)
-			{
+		if(coupon.getCompanyID() == m_companyID){
+			if(isCouponTitleExists(coupon)==false){
 				m_coupons.addCoupon(coupon);
-				System.out.println("coupon added.");
 			}
-			else
-			{
+			else{
 				System.out.println(coupon.getTitle() + "`s title already exists");
 			}
 		}
-		else
-		{
+		else{
 			System.out.println(coupon.getTitle() + " This coupon doesn`t belong to our company");
 		}
-		
 	}
 	private boolean isCouponTitleExists(Coupon coupon){
 		ArrayList<Coupon> coupons = m_companies.getAllCouponsByCompanyID(this.m_companyID);
@@ -126,7 +114,19 @@ public class CompanyFacade extends ClientFacade {
 	public Company getCompanyDetails(){
 		return m_companies.getOneCompany(this.m_companyID);
 	}
+	
+	public CompanyFacade() {}
+	public CompanyFacade(int companyID)
+	{
+		m_companyID = companyID;
+	}
 	public void setID(int companyID) {
 		m_companyID = companyID;
+	}
+	public int getCompanyID() {
+		return m_companyID;
+	}
+	public int getCompanyIDByName(String email, String password) {
+		return m_companies.getCompanyIdByEmailAndPassword(email, password);
 	}
 }

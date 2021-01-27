@@ -13,12 +13,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	public void addCoupon(Coupon coupon) {
 		Connection connection=null;
-		/*String query1 = "INSERT INTO `project.1`.`coupons` (`ID`, `COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
-				+ "VALUES " + "('" + coupon.getID() + "', '" + coupon.getCompanyID()  + "', '" + Category.ToInt(coupon.getCategory()) + "', '" + coupon.getTitle() + "', '" + 
-				coupon.getDescription() + "', '" + coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + 
-				coupon.getImage() + "');";
-		*/
-		String query = "INSERT INTO `project.1`.`coupons` (`COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
+		String query = "INSERT INTO `project.1`.coupons (`COMPANY_ID`, `CATEGORY_ID`, `TITLE`, `DESCRIPTION`, `START_DATE`, `END_DATE`, `AMOUNT`, `PRICE`, `IMAGE`) "
 				+ "VALUES " + "('"+ coupon.getCompanyID()  + "', '" + Category.ToInt(coupon.getCategory()) + "', '" + coupon.getTitle() + "', '" + coupon.getDescription() + "', '" + 
 				coupon.getStartDate() + "', '" + coupon.getEndDate() + "', '" + coupon.getAmount() + "', '" + coupon.getPrice() + "', '" + 
 				coupon.getImage() + "');";
@@ -39,7 +34,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	public void updateCoupon(Coupon coupon) {
 		Connection connection=null;
-		String query = "UPDATE `project.1`.`coupons` SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ Category.ToInt(coupon.getCategory()) +
+		String query = "UPDATE `project.1`.coupons SET COMPANY_ID = '"+ coupon.getCompanyID() +"', CATEGORY_ID = '"+ Category.ToInt(coupon.getCategory()) +
 				"', TITLE = '"+ coupon.getTitle() +"', DESCRIPTION = '"+ coupon.getDescription() + "', START_DATE = '"+ coupon.getStartDate() +
 				"', END_DATE = '"+ coupon.getEndDate() +"', AMOUNT = '"+ coupon.getAmount() +"', PRICE = '"+ coupon.getPrice() +"', IMAGE = '"+ coupon.getImage() +
 				"' WHERE (ID = '" + coupon.getID() + "');";
@@ -59,7 +54,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}	
 	public void deleteCoupon(int couponID) {
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.`coupons` WHERE (ID = '" + couponID + "');";
+		String query = "DELETE FROM `project.1`.coupons WHERE (ID = '" + couponID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
@@ -77,7 +72,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public ArrayList<Coupon> getAllCoupons(){
 		Connection connection=null;
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		String query = "SELECT * FROM `project.1`.`coupons`;";
+		String query = "SELECT * FROM `project.1`.coupons;";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -103,7 +98,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public Coupon getOneCoupon(int couponID) {
 		Connection connection=null;
 		Coupon coupon = null;
-		String query = "SELECT * FROM `project.1`.`coupons` WHERE (ID = '" + couponID + "');";
+		String query = "SELECT * FROM `project.1`.coupons WHERE (ID = '" + couponID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -129,7 +124,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public void addCopounPurchase(int customerID, int couponID) {
 		Connection connection=null;
 		// add to customers_vs_coupons
-		String query = "INSERT INTO `project.1`.`customers_vs_coupons` (`COUPON_ID`, `CUSTOMER_ID`) VALUES ('" + couponID + "', '" + customerID + "');";
+		String query = "INSERT INTO `project.1`.customers_vs_coupons (`COUPON_ID`, `CUSTOMER_ID`) VALUES ('" + couponID + "', '" + customerID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
@@ -148,7 +143,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	}
 	public void deleteCopounPurchase(int customerID, int couponID) {
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "' AND CUSTOMER_ID = '" + customerID + "');";
+		String query = "DELETE FROM `project.1`.customers_vs_coupons WHERE (COUPON_ID = '" + couponID + "' AND CUSTOMER_ID = '" + customerID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
@@ -160,7 +155,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public ResultSet getCustomerVsCouponTableByCouponID(int couponID) {
 		Connection connection=null;
 		ResultSet customerVScoupon = null;
-		String query = "SELECT * FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
+		String query = "SELECT * FROM `project.1`.customers_vs_coupons WHERE (COUPON_ID = '" + couponID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -180,7 +175,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public void deleteCouponFromCustomerVsCouponTableByID(int couponID)
 	{
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.`customers_vs_coupons` WHERE (COUPON_ID = '" + couponID + "');";
+		String query = "DELETE FROM `project.1`.customers_vs_coupons WHERE (COUPON_ID = '" + couponID + "');";
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeUpdate(query);
@@ -198,7 +193,7 @@ public class CouponsDBDAO implements CouponsDAO {
 	public boolean isCouponExist(int couponID) {
 		boolean isExist = true;
 		Connection connection = null;
-		String query = "SELECT * FROM `project.1`.`coupons` WHERE (ID = '" + couponID + "');";
+		String query = "SELECT * FROM `project.1`.coupons WHERE (ID = '" + couponID + "');";
 		ResultSet couponSet = null;
 		
 		try {

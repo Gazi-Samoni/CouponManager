@@ -39,11 +39,9 @@ public class Customer {
 	public void setCoupons(ArrayList<Coupon> coupons) {
 		this.m_coupons = coupons;
 	}
-	
 	public Customer() {
 
 	}
-	
 	public Customer(int id, String firstName, String lastName, String email, String password) {
 		this.m_id = id;
 		this.m_firstName = firstName;
@@ -51,7 +49,13 @@ public class Customer {
 		this.m_email = email;
 		this.m_password = password;
 	}
-	
+	public Customer(String firstName, String lastName, String email, String password) {
+		this.m_id = -1;
+		this.m_firstName = firstName;
+		this.m_lastName = lastName;
+		this.m_email = email;
+		this.m_password = password;
+	}
 	@Override
 	public String toString() {
 		return "Customer [id=" + m_id + ", firstName=" + m_firstName + ", lastName=" + m_lastName + ", email=" + m_email + "]";

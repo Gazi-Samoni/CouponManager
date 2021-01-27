@@ -22,7 +22,6 @@ public class LoginManager {
 	public ClientFacade login(String email, String password, ClientType clientType)
 	{
 		ClientFacade client = null;
-		boolean isExist = false;
 		
 		switch(clientType)
 		{
@@ -34,8 +33,8 @@ public class LoginManager {
 				
 			case Company:
 					CompanyFacade companyAuthority = new CompanyFacade();
-					isExist = companyAuthority.getCompanies().isCompanyExists(email, password);
-					if(isExist) {
+
+					if(companyAuthority.login(email, password)) {
 						int companyID = companyAuthority.getCompanies().getCompanyIdByEmailAndPassword(email,password);
 						companyAuthority.setID(companyID);
 						client = companyAuthority;
@@ -44,8 +43,7 @@ public class LoginManager {
 				
 			case Customer:
 					CustomerFacade customerAuthority = new CustomerFacade();
-					isExist = customerAuthority.getCustomers().isCustomerExists(email, password);
-					if(isExist) {
+					if(customerAuthority.login(email, password)) {
 						int customerID = customerAuthority.getCustomers().getCustomerIdByEmailAndPassword(email,password);
 						customerAuthority.setID(customerID);
 						client = customerAuthority;

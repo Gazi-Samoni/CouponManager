@@ -15,7 +15,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	public boolean isCompanyExists(String email, String password) {
 		boolean isExist = true;
 		Connection connection = null;
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.companies WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
 		ResultSet companySet = null;
 		
 		try {
@@ -40,11 +40,12 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public void addCompany(Company company) {
 		Connection connection = null;
-		String query = "INSERT INTO `project.1`.`companies` (`ID`, `NAME`, `EMAIL`, `PASSWORD`)" + "VALUES" + "('"+ company.getID()  +"', '"+ company.getName() +"', '"+ company.getEmail() + "', '" + company.getPassword() + "');\r\n";
+		String query = "INSERT INTO `project.1`.companies (NAME, EMAIL, PASSWORD)" + "VALUES" + "('"+ company.getName() +"', '"+ company.getEmail() + "', '" + company.getPassword() + "');\r\n";
 		
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
+			System.out.println("company added");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -57,11 +58,12 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public void updateCompany(Company company) { // reverse name set
 		Connection connection = null;
-		String query = "UPDATE `project.1`.`companies` SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE (ID = '" + company.getID() + "');\r\n";
+		String query = "UPDATE `project.1`.companies SET NAME = '" + company.getName() +"', EMAIL = '" + company.getEmail() + "', PASSWORD = '"+ company.getPassword() +"' WHERE (ID = '" + company.getID() + "');\r\n";
 		
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
+			System.out.println("company updated");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -74,11 +76,12 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public void deleteCompany(int companyID) {
 		Connection connection = null;
-		String query = "DELETE FROM `project.1`.`companies` WHERE (ID = '" + companyID + "');";
+		String query = "DELETE FROM `project.1`.companies WHERE (ID = '" + companyID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
 			connection.createStatement().executeUpdate(query);
+			System.out.println("company deleted");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -91,7 +94,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public ArrayList<Company> getAllCompanies(){
 		Connection connection = null;
-		String query = "SELECT * FROM `project.1`.`companies` ;\r\n";
+		String query = "SELECT * FROM `project.1`.companies ;\r\n";
 		ResultSet companiesSet = null;
 		ArrayList<Company> companies = new ArrayList<Company>();
 		
@@ -121,7 +124,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	public ArrayList<Coupon> getAllCouponsByCompanyID(int companyID){
 		Connection connection=null;
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		String query = "SELECT * FROM `project.1`.`coupons` WHERE COMPANY_ID = '"+ companyID + "';";
+		String query = "SELECT * FROM `project.1`.coupons WHERE COMPANY_ID = '"+ companyID + "';";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -144,7 +147,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public Company getOneCompany(int companyID) {
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.`companies` WHERE ID = '" + companyID + "';";
+		String query = "SELECT * FROM `project.1`.companies WHERE ID = '" + companyID + "';";
 		ResultSet companiesSet = null;
 		Company company = null;
 			
@@ -169,7 +172,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public boolean isEmailExists(String email) {
 		Connection connection=null;
-		String query = "SELECT EMAIL FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "') ;\r\n";
+		String query = "SELECT EMAIL FROM `project.1`.companies WHERE (EMAIL = '" + email + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
@@ -191,7 +194,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public boolean isNameExists(String name) {
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "') ;\r\n";
+		String query = "SELECT * FROM `project.1`.companies WHERE (NAME = '" + name + "') ;\r\n";
 		ResultSet companiesSet = null;
 		
 		try {
@@ -212,7 +215,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	}
 	public Company getOneCompanyByName(String name) {
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (NAME = '" + name + "');";
+		String query = "SELECT * FROM `project.1`.companies WHERE (NAME = '" + name + "');";
 		ResultSet companiesSet = null;
 		Company company = null;
 		
@@ -238,7 +241,7 @@ public class CompaniesDBDAO implements CompaniesDAO{
 	public int getCompanyIdByEmailAndPassword(String email, String password) {
 		// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.`companies` WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
+		String query = "SELECT * FROM `project.1`.companies WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
 		ResultSet companySet = null;
 		int companyID = -1;
 		

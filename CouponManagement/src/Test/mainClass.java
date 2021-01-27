@@ -16,18 +16,18 @@ public class mainClass {
 	{
 		//(new CouponExpiraitionDailyJob()).run();
 		
-		//ClearDB.ClearDBTables();
+		ClearDB.ClearDBTables();
 		LoginManager loginManager  = LoginManager.getInstance();
 
 		
-		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
+		AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
 		
-		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
+		//CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
 		//CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
 
 		
-		//administratorUserTest(adminFacde);
-		companyUserTest(companyFacade);
+		administratorUserTest(adminFacde);
+		//companyUserTest(companyFacade);
 		//CustomerUserTest(customerFacade);	
 	}
 	
@@ -40,31 +40,35 @@ public class mainClass {
 		System.out.println("Administrator Login: " + adminFacade.login("admin@admin.com","admin"));
 		
 		//Add new Company
-		Company company = new Company(21,"Amdocs","Amdocs@Amdocs.com","1234");
-		Company company2 = new Company(22,"Intel","Intel@Intel.com","1234");
-		Company company3 = new Company(23,"Microsoft","Microsoft@Microsoft.com","1234");
-		adminFacade.addCompany(company);
-		adminFacade.addCompany(company2);
-		adminFacade.addCompany(company3);	
+		Company Amdocs = new Company("Amdocs","Amdocs@Amdocs.com","1234");
+		Company Intel = new Company("Intel","Intel@Intel.com","1234");
+		Company Microsoft = new Company("Microsoft","Microsoft@Microsoft.com","1234");
+		adminFacade.addCompany(Amdocs);
+		adminFacade.addCompany(Intel);
+		adminFacade.addCompany(Microsoft);	
 		
 		
 		//to delete
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
-		CompanyFacade companyFacade = new CompanyFacade(21);
+		CompanyFacade companyFacade = new CompanyFacade();
 		//create coupons
-		Coupon coupon = new Coupon(51,21,Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(52,21,Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
-		Coupon coupon3 = new Coupon(51,21,Category.Restaurant,"coupon3","test1",date,date,5,3.6,"temp");
+		Amdocs.setID(companyFacade.getCompanyIDByName(Amdocs.getEmail(),Amdocs.getPassword()));
+		companyFacade.setID(Amdocs.getID());
+		Intel.setID(companyFacade.getCompanyIDByName(Intel.getEmail(),Intel.getPassword()));
+		Microsoft.setID(companyFacade.getCompanyIDByName(Microsoft.getEmail(),Microsoft.getPassword()));
+		
+		Coupon coupon = new Coupon(Amdocs.getID(),Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(Amdocs.getID(),Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
+		Coupon coupon3 = new Coupon(Amdocs.getID(),Category.Restaurant,"coupon3","test1",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 		companyFacade.addCoupon(coupon2);
 		companyFacade.addCoupon(coupon3);
 		
 		
-		
 		//Failure test 
 			//exists name
-			Company company4 = new Company(24,"Amdocs","a@a.com","1234");	
+			Company company4 = new Company("Amdocs","a@a.com","1234");	
 			adminFacade.addCompany(company4);
 			//exists email
 			company4.setEmail("Intel@Intel.com");
@@ -73,22 +77,22 @@ public class mainClass {
 		
 		//Update Company
 			//Edit Password 
-			company3.setPassword("8888");
-			adminFacade.updateCompany(company3);
+			Microsoft.setPassword("8888");
+			adminFacade.updateCompany(Microsoft);
 			//Edit ID -> fail
-			company.setID(25);
-			adminFacade.updateCompany(company);
+			Amdocs.setID(25);
+			adminFacade.updateCompany(Amdocs);
 					
 			//Edit Company Name -> fail
-			company2.setName("zerto");
-			adminFacade.updateCompany(company2);
+			Intel.setName("zerto");
+			adminFacade.updateCompany(Intel);
 					
 			//restore original info
-			company.setID(21);
-			company2.setName("Intel");
+			Amdocs.setID(21);
+			Intel.setName("Intel");
 		
 		//Delete Company
-		adminFacade.deleteCompany(company.getID());
+		adminFacade.deleteCompany(Amdocs.getID());
 		
 		//Get all Companies
 		ArrayList<Company> companies = adminFacade.getAllCompanies();
@@ -96,22 +100,22 @@ public class mainClass {
 			System.out.println(companies.get(i).toString());
 		}
 		//Get one Company
-		Company company5 = adminFacade.getOneCompany(company2.getID());
+		Company company5 = adminFacade.getOneCompany(Intel.getID());
 		System.out.println(company5.toString());
 		
 		
 		//Add new customers
-		Customer customer = new Customer(31,"Abed","shalgam","abed@gmail.com","1234");
-		Customer customer2 = new Customer(32,"Gazi","Samoni","gazi@gmail.com","1234");
+		Customer customer = new Customer("Abed","shalgam","abed@gmail.com","1234");
+		Customer customer2 = new Customer("Gazi","Samoni","gazi@gmail.com","1234");
 		adminFacade.addCustomer(customer);
 		adminFacade.addCustomer(customer2);
 		
 		//add customer with exists email	
-		Customer customer3 = new Customer(32,"john","kyle","john@gmail.com","1234");
+		Customer customer3 = new Customer("john","kyle","john@gmail.com","1234");
 		adminFacade.addCustomer(customer3);
 		
 		//update customer
-		customer.setLastName("magregor");
+		customer.setLastName("dustin");
 		adminFacade.updateCustomer(customer);
 			//Edit customer id -> failed
 			customer.setId(35);
@@ -147,15 +151,10 @@ public class mainClass {
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
 		
-		Coupon coupon41 = new Coupon(22,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
-		companyFacade.addCoupon(coupon41);	
-		System.out.println("added");
-		/*
-		
-		Coupon coupon = new Coupon(54,21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
+		Coupon coupon = new Coupon(21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 			//Same Title -> failed
-			Coupon coupon2 = new Coupon(55,21,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
+			Coupon coupon2 = new Coupon(21,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
 			companyFacade.addCoupon(coupon2);	
 		
 		//Update coupon
@@ -189,7 +188,7 @@ public class mainClass {
 		//Get Company details
 		Company company = companyFacade.getCompanyDetails();
 		System.out.println(company.toString());
-		*/
+		
 	}
 	
 	static void CustomerUserTest(CustomerFacade customerFacade)
