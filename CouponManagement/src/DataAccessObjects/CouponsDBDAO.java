@@ -121,6 +121,31 @@ public class CouponsDBDAO implements CouponsDAO {
 
 		return coupon;
 	}
+	public Coupon getOneCoupon(int companyID,String couponTitle) {
+		Connection connection=null;
+		Coupon coupon = null;
+		String query = "SELECT * FROM `project.1`.coupons WHERE (COMPANY_ID = '" + companyID + "' AND TITLE = '" + couponTitle + "');";
+		
+		try {
+			connection = m_connectionPool.getConnection();
+			ResultSet couponsTable = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery(query);
+			if(couponsTable.next() == true)
+			{
+				coupon = new Coupon(couponsTable.getInt(1),couponsTable.getInt(2), Category.FromInt(couponsTable.getInt(3)) ,couponsTable.getString(4),couponsTable.getString(5),couponsTable.getDate(6),couponsTable.getDate(7),couponsTable.getInt(8),couponsTable.getDouble(9),couponsTable.getString(10));
+			}
+			
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
+		finally {
+			if(connection != null)
+			{
+				m_connectionPool.restoreConnection(connection);
+			}
+		}
+		return coupon;
+	}
 	public void addCopounPurchase(int customerID, int couponID) {
 		Connection connection=null;
 		// add to customers_vs_coupons

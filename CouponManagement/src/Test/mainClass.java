@@ -9,29 +9,24 @@ import Table.ClearDB;
 
 import java.util.*;
 
-import DataAccessObjects.CouponsDBDAO;
 
 public class mainClass {
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		//(new CouponExpiraitionDailyJob()).run();
 		
-		ClearDB.ClearDBTables();
+		//ClearDB.ClearDBTables();
 		LoginManager loginManager  = LoginManager.getInstance();
 
 		
-		AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
+		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
+		//administratorUserTest(adminFacde);
 		
 		//CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
-		//CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
-
-		
-		administratorUserTest(adminFacde);
 		//companyUserTest(companyFacade);
-		//CustomerUserTest(customerFacade);	
+		
+		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
+		CustomerUserTest(customerFacade);	
 	}
-	
-	//to fix exceptions message
 		
 	static void administratorUserTest(AdminFacade adminFacade){
 		System.out.println("------------------Administrator Test------------------");
@@ -80,6 +75,7 @@ public class mainClass {
 			Microsoft.setPassword("8888");
 			adminFacade.updateCompany(Microsoft);
 			//Edit ID -> fail
+			int saveID = Amdocs.getID();
 			Amdocs.setID(25);
 			adminFacade.updateCompany(Amdocs);
 					
@@ -88,7 +84,7 @@ public class mainClass {
 			adminFacade.updateCompany(Intel);
 					
 			//restore original info
-			Amdocs.setID(21);
+			Amdocs.setID(saveID);
 			Intel.setName("Intel");
 		
 		//Delete Company
@@ -104,25 +100,28 @@ public class mainClass {
 		System.out.println(company5.toString());
 		
 		
+		CustomerFacade customerFacade = new CustomerFacade();
 		//Add new customers
 		Customer customer = new Customer("Abed","shalgam","abed@gmail.com","1234");
 		Customer customer2 = new Customer("Gazi","Samoni","gazi@gmail.com","1234");
 		adminFacade.addCustomer(customer);
 		adminFacade.addCustomer(customer2);
-		
+		customer.setId(customerFacade.getCustomerIdByEmailAndPassword(customer.getEmail(), customer.getPassword()));
+		customer2.setId(customerFacade.getCustomerIdByEmailAndPassword(customer2.getEmail(), customer2.getPassword()));
 		//add customer with exists email	
-		Customer customer3 = new Customer("john","kyle","john@gmail.com","1234");
+		Customer customer3 = new Customer("john","kyle","gazi@gmail.com","1234");
 		adminFacade.addCustomer(customer3);
 		
 		//update customer
 		customer.setLastName("dustin");
 		adminFacade.updateCustomer(customer);
+		int saveID1 = customer.getId();
 			//Edit customer id -> failed
 			customer.setId(35);
 			adminFacade.updateCustomer(customer);
 			
 			//reset data
-			customer.setId(31);
+			customer.setId(saveID1);
 		
 		//Delete customer
 		adminFacade.deleteCustomer(customer.getId());
@@ -139,27 +138,22 @@ public class mainClass {
 		
 	}
 	
-	static void companyUserTest(CompanyFacade companyFacade )
-	{	
+	static void companyUserTest(CompanyFacade companyFacade ){	
 		System.out.println("------------------Company Test------------------");
-		//Login
-		if(companyFacade.login("Amdocs@Amdocs.com","1234")) {
-			System.out.println("Company Login");
-		}	
-		
+
 		//Add Coupon
 		long millis=System.currentTimeMillis(); 
 		java.sql.Date date = new java.sql.Date(millis);
 		
-		Coupon coupon = new Coupon(21,Category.Vacation,"coupon3","amdocs from companyUserTest ",date,date,5,3.6,"temp");
+		Coupon coupon = new Coupon(companyFacade.getCompanyID(),Category.Vacation,"coupon3","Intel from companyUserTest ",date,date,5,3.6,"temp");
 		companyFacade.addCoupon(coupon);
 			//Same Title -> failed
-			Coupon coupon2 = new Coupon(21,Category.Food,"coupon3","amdocs from companyUserTest",date,date,3,3.6,"temp");
+			Coupon coupon2 = new Coupon(companyFacade.getCompanyID(),Category.Food,"coupon3","Intel from companyUserTest",date,date,3,3.6,"temp");
 			companyFacade.addCoupon(coupon2);	
 		
 		//Update coupon
 		coupon.setAmount(10);
-		coupon.setDescription("amdocs after edit");
+		coupon.setDescription("Intel after edit");
 		companyFacade.updateCoupon(coupon);
 		
 		//Delete coupon
@@ -188,26 +182,28 @@ public class mainClass {
 		//Get Company details
 		Company company = companyFacade.getCompanyDetails();
 		System.out.println(company.toString());
-		
 	}
 	
-	static void CustomerUserTest(CustomerFacade customerFacade)
-	{
-		long millis=System.currentTimeMillis(); 
-		java.sql.Date date = new java.sql.Date(millis);
+	static void CustomerUserTest(CustomerFacade customerFacade){
+		CompanyFacade companyFacade = new CompanyFacade();
+		int IntelID = companyFacade.getCompanyIDByName("Intel@Intel.com","1234");
+		companyFacade.setID(IntelID);
+		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+		java.sql.Date dateEnd = new java.sql.Date(2022-1900,1-1,1);
 		@SuppressWarnings("deprecation")
-		java.sql.Date dateExpierd = new java.sql.Date(1,1,2020);
+		java.sql.Date dateExpierd = new java.sql.Date(2022-1920,1-1,1);
 		
-		Coupon coupon = new Coupon(54,21,Category.Vacation,"AC","amdocs from CustomerUserTest ",date,date,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(56,21,Category.Food,"AB","amdocs from CustomerUserTest->zero amount ",date,date,0,3.6,"temp");
-		Coupon coupon3 = new Coupon(57,21,Category.Food,"AB","amdocs from CustomerUserTest->expierd date ",date,dateExpierd,80,3.6,"temp");
+		Coupon coupon = new Coupon(IntelID,Category.Vacation,"AC","Intel from CustomerUserTest ",date,dateEnd,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(IntelID,Category.Food,"AB","Intel from CustomerUserTest->zero amount ",date,dateEnd,0,3.6,"temp");
+		Coupon coupon3 = new Coupon(IntelID,Category.Food,"ABc","Intel from CustomerUserTest->expierd date ",date,dateExpierd,80,3.6,"temp");
 		
-		CouponsDBDAO tester = new CouponsDBDAO();
-		tester.addCoupon(coupon);
-		tester.addCoupon(coupon2);
-		tester.addCoupon(coupon3);
-		
-		
+		companyFacade.addCoupon(coupon);
+		companyFacade.addCoupon(coupon2);
+		companyFacade.addCoupon(coupon3);
+	
+		coupon.setID(customerFacade.getOneCoupon(coupon.getCompanyID(), coupon.getTitle()).getID());
+		coupon2.setID(customerFacade.getOneCoupon(coupon2.getCompanyID(), coupon2.getTitle()).getID());
+		coupon3.setID(customerFacade.getOneCoupon(coupon3.getCompanyID(), coupon3.getTitle()).getID());
 		//Purchase Coupon
 		customerFacade.purchaseCoupon(coupon);
 			//repurchase same coupon ->fails
@@ -231,15 +227,12 @@ public class mainClass {
 		//Get customer coupons by Category
 		ArrayList<Coupon> custumerCoupons2 = customerFacade.getCustomerCoupons(Category.Food);
 		
-		System.out.println("syso w2shrb myto");
-		
-		for(Coupon var:custumerCoupons2)
-		{
+		for(Coupon var:custumerCoupons2){
 			System.out.println(var.toString());
 		}
 		System.out.println("");
 		//Get customer coupons by max price
-		ArrayList<Coupon> custumerCoupons3 = customerFacade.getCustomerCoupons(20);
+		ArrayList<Coupon> custumerCoupons3 = customerFacade.getCustomerCoupons(customerFacade.getID());
 		for(Coupon var:custumerCoupons3)
 		{
 			System.out.println(var.toString());

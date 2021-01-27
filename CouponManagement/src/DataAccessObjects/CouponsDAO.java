@@ -14,6 +14,7 @@ public interface CouponsDAO {
 	public ResultSet getCustomerVsCouponTableByCouponID(int couponID);
 	public void deleteCouponFromCustomerVsCouponTableByID(int couponID);
 	public boolean isCouponExist(int id);
+	public Coupon getOneCoupon(int companyID,String couponTitle);
 	
 }
 

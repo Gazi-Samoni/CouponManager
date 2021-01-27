@@ -17,8 +17,8 @@ public class AdminFacade extends ClientFacade {
 		else 
 			return false;
 	}
-	public void addCompany(Company company)
-	{
+	public void addCompany(Company company){
+		
 		if(this.m_companies.isEmailExists(company.getEmail()))
 		{
 			System.out.println("Company's email already exists");
@@ -32,29 +32,23 @@ public class AdminFacade extends ClientFacade {
 			this.m_companies.addCompany(company);
 		}
 	}
-	public void updateCompany(Company company)//need to check if i can block EDIT ID from DAO. // handshake check
-	{
+	public void updateCompany(Company company){
 		Company tempCompany = this.m_companies.getOneCompany(company.getID()); 
 		Company tempCompany2 = this.m_companies.getOneCompanyByName(company.getName()); 
 		
-		if(tempCompany== null || tempCompany2 == null)
-		{
+		if(tempCompany== null || tempCompany2 == null){
 			System.out.println("Invaild input -> Can't edit company Id");
 		}
-		else 
-		{
-			if(!tempCompany.getName().equals(tempCompany2.getName()) || tempCompany.getID() != tempCompany2.getID())
-			{
+		else {
+			if(!tempCompany.getName().equals(tempCompany2.getName()) || tempCompany.getID() != tempCompany2.getID()){
 				System.out.println("Invaild input: u can't edit company's name/id");
 			}
-			else
-			{
+			else{
 				this.m_companies.updateCompany(company);
 			}
 		}
 	}
-	public void deleteCompany(int companyID)
-	{
+	public void deleteCompany(int companyID){
 		Company company = this.m_companies.getOneCompany(companyID);
 		ArrayList<Coupon> coupons = company.getCoupons();
 		deleteCouponsHistory(coupons);
@@ -63,8 +57,7 @@ public class AdminFacade extends ClientFacade {
 	private void deleteCouponsHistory(ArrayList<Coupon> coupons) {
 		Coupon coupon;
 		
-		while(!coupons.isEmpty())
-		{
+		while(!coupons.isEmpty()){
 			coupon = coupons.get(0);
 			deleteCouponFromCustomerHistory(coupon.getID());
 			this.m_coupons.deleteCoupon(coupon.getID());
@@ -96,31 +89,24 @@ public class AdminFacade extends ClientFacade {
 			System.out.println(e.getMessage());
 		}
 	}
-	public ArrayList<Company> getAllCompanies()
-	{
+	public ArrayList<Company> getAllCompanies(){
 		return this.m_companies.getAllCompanies();
 	}
-	public Company getOneCompany(int companyID)
-	{
+	public Company getOneCompany(int companyID){
 		return this.m_companies.getOneCompany(companyID);
 	}
-	public void addCustomer(Customer customer)
-	{
-		if(m_customers.isCustomerEmailExists(customer.getEmail()))
-		{
+	public void addCustomer(Customer customer){
+		if(m_customers.isCustomerEmailExists(customer.getEmail())){
 			System.out.println(customer.getEmail() + " already Exists");
 		}
-		else
-		{
+		else{
 			this.m_customers.addCustomer(customer);
 		}
 	}
-	public void updateCustomer(Customer customer)
-	{
+	public void updateCustomer(Customer customer){
 		this.m_customers.updateCustomer(customer);
 	}
-	public void deleteCustomer(int customerID)
-	{
+	public void deleteCustomer(int customerID){
 		ArrayList<Coupon> coupons = this.m_customers.getOneCustomer(customerID).getCoupons();
 		//delete from customer_vs_coupon table
 		if(coupons == null)
@@ -133,15 +119,12 @@ public class AdminFacade extends ClientFacade {
 				this.m_coupons.deleteCopounPurchase(customerID, var.getID());
 			}
 		}
-	
 		this.m_customers.deleteCustomer(customerID);
 	}
-	public ArrayList<Customer> getAllCustomer()
-	{
+	public ArrayList<Customer> getAllCustomer(){
 		return this.m_customers.getAllCustomers();
 	}
-	public Customer getOneCustomer(int customerID)
-	{
+	public Customer getOneCustomer(int customerID){
 		return this.m_customers.getOneCustomer(customerID);
 	}
 }
