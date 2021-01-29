@@ -14,21 +14,24 @@ public class mainClass {
 	public static void main(String[] args){
 		//(new CouponExpiraitionDailyJob()).run();
 		
-		//ClearDB.ClearDBTables();
+		ClearDB.ClearDBTables();
+	
 		LoginManager loginManager  = LoginManager.getInstance();
 
 		
-		//AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
-		//administratorUserTest(adminFacde);
+		AdminFacade  adminFacde = (AdminFacade)loginManager.login("admin@admin.com","admin", ClientType.Administrator);
+		administratorUserTest(adminFacde);
 		
-		//CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
-		//companyUserTest(companyFacade);
+		CompanyFacade  companyFacade = (CompanyFacade)loginManager.login("Intel@Intel.com","1234", ClientType.Company);
+		companyUserTest(companyFacade);
 		
 		CustomerFacade  customerFacade = (CustomerFacade)loginManager.login("gazi@gmail.com","1234", ClientType.Customer);
 		CustomerUserTest(customerFacade);	
+	
 	}
 		
 	static void administratorUserTest(AdminFacade adminFacade){
+		System.out.println("\n\n\n");
 		System.out.println("------------------Administrator Test------------------");
 		
 		//Login
@@ -139,6 +142,7 @@ public class mainClass {
 	}
 	
 	static void companyUserTest(CompanyFacade companyFacade ){	
+		System.out.println("\n\n\n");
 		System.out.println("------------------Company Test------------------");
 
 		//Add Coupon
@@ -185,6 +189,9 @@ public class mainClass {
 	}
 	
 	static void CustomerUserTest(CustomerFacade customerFacade){
+		System.out.println("\n\n\n");
+		System.out.println("------------------Customer Test------------------");
+		
 		CompanyFacade companyFacade = new CompanyFacade();
 		int IntelID = companyFacade.getCompanyIDByName("Intel@Intel.com","1234");
 		companyFacade.setID(IntelID);

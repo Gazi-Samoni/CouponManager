@@ -16,7 +16,7 @@ public class CustomersDBDAO implements CustomersDAO {
 		Connection connection=null;
 		boolean isExist = true;
 		
-		String query = "SELECT * FROM `project.1`.customers WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
+		String query = "SELECT * FROM couponmanager.customers WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "') ;\r\n";
 		ResultSet costumerSet = null;
 		
 		try {
@@ -42,7 +42,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void addCustomer(Customer customer) {
 		Connection connection=null;
-		String query = "INSERT INTO `project.1`.customers (`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`) "
+		String query = "INSERT INTO couponmanager.customers (`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`) "
 				+ "VALUES " + "('"+ customer.getFirstName()  +"', '"+ customer.getLastName() +"', '"+ customer.getEmail() + "', '" + customer.getPassword() + "');";
 		
 		try {
@@ -61,7 +61,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void updateCustomer(Customer customer) {
 		Connection connection=null;
-		String query = "UPDATE `project.1`.customers SET FIRST_NAME = '"+ customer.getFirstName() +"', LAST_NAME = '"+ customer.getLastName() +"', EMAIL = '"+ customer.getEmail() +"', PASSWORD = '"+ customer.getPassword() +"' WHERE (ID = '" + customer.getId() + "');";
+		String query = "UPDATE couponmanager.customers SET FIRST_NAME = '"+ customer.getFirstName() +"', LAST_NAME = '"+ customer.getLastName() +"', EMAIL = '"+ customer.getEmail() +"', PASSWORD = '"+ customer.getPassword() +"' WHERE (ID = '" + customer.getId() + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();	
@@ -79,7 +79,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public void deleteCustomer(int customerID) {
 		Connection connection=null;
-		String query = "DELETE FROM `project.1`.customers WHERE (ID = '" + customerID + "');";
+		String query = "DELETE FROM couponmanager.customers WHERE (ID = '" + customerID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -97,7 +97,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public ArrayList<Customer> getAllCustomers(){
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.customers;";
+		String query = "SELECT * FROM couponmanager.customers;";
 		ResultSet costumersSet = null;
 		ArrayList<Customer> costumers = new ArrayList<Customer>();
 		
@@ -145,7 +145,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	private Coupon getOneCoupon(int couponID) {
 		Connection connection=null;
 		Coupon coupon = null;
-		String query = "SELECT * FROM `project.1`.coupons WHERE (ID = '" + couponID + "');";
+		String query = "SELECT * FROM couponmanager.coupons WHERE (ID = '" + couponID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -171,7 +171,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	
 	public Customer getOneCustomer(int customerID) {
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.customers WHERE (ID = '" + customerID + "');";
+		String query = "SELECT * FROM couponmanager.customers WHERE (ID = '" + customerID + "');";
 		ResultSet costumersSet = null;
 		Customer customer = null;
 		
@@ -201,7 +201,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	public boolean isCustomerEmailExists(String email)
 	{
 		Connection connection =null;
-		String query = "SELECT * FROM `project.1`.customers WHERE (EMAIL = '" + email + "');";
+		String query = "SELECT * FROM couponmanager.customers WHERE (EMAIL = '" + email + "');";
 		ResultSet costumersSet = null;
 		boolean isExists = false;
 		
@@ -226,7 +226,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	{
 		Connection connection=null;
 		ResultSet customerVScoupon = null;
-		String query = "SELECT * FROM `project.1`.customers_vs_coupons WHERE (CUSTOMER_ID = '" + customerID + "');";
+		String query = "SELECT * FROM couponmanager.customers_vs_coupons WHERE (CUSTOMER_ID = '" + customerID + "');";
 		
 		try {
 			connection = m_connectionPool.getConnection();
@@ -248,7 +248,7 @@ public class CustomersDBDAO implements CustomersDAO {
 	public int getCustomerIdByEmailAndPassword(String email, String password) {
 	// doesn't check if the email + password are valid, so the user of this function must make sure before using it.
 		Connection connection=null;
-		String query = "SELECT * FROM `project.1`.customers WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
+		String query = "SELECT * FROM couponmanager.customers WHERE (EMAIL = '" + email + "' AND PASSWORD = '" + password + "');";
 		ResultSet customerSet = null;
 		int customerID = -1;
 				

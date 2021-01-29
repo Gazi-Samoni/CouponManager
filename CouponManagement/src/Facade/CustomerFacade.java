@@ -30,7 +30,7 @@ public class CustomerFacade extends ClientFacade  {
 				if(customerVScoupon.getInt(2) == coupon.getID())
 				{
 					purchased =true;
-					System.out.println("You already purched this coupon");
+					System.out.println("You already purchased this coupon");
 				}
 			}
 		} catch (SQLException e) {
@@ -56,7 +56,7 @@ public class CustomerFacade extends ClientFacade  {
 			}
 			else
 			{
-				System.out.println("There is no more left of this coupon");
+				System.out.println(coupon.getTitle() + " sold out :(");
 			}
 		}
 	}

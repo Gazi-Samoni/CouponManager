@@ -16,16 +16,16 @@ public class ClearDB {
 		try {
 			connection = m_connectionPool.getConnection();
 			
-			query = "DELETE FROM `project.1`.`customers_vs_coupons`;";
+			query = "DELETE FROM couponmanager.customers_vs_coupons;";
 			connection.createStatement().executeUpdate(query);
 			
-			query = "DELETE FROM `project.1`.`coupons`;";
+			query = "DELETE FROM couponmanager.coupons;";
 			connection.createStatement().executeUpdate(query);
 			
-			query = "DELETE FROM `project.1`.`customers`;";
+			query = "DELETE FROM couponmanager.customers;";
 			connection.createStatement().executeUpdate(query);
 			
-			query = "DELETE FROM `project.1`.`companies`;";
+			query = "DELETE FROM couponmanager.companies;";
 			connection.createStatement().executeUpdate(query);
 			
 		} catch (SQLException e) {

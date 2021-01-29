@@ -10,7 +10,7 @@ public class SQLconnection {
 
 	//DB Driver Name and DB URL
 	public static final String JDBC_DRIVER="com.mysql.jdbc.Driver";
-	public static final String DB_URL= "jdbc:mysql://localhost:3306/project.1?useSSL=false&serverTimezone=UTC";
+	public static final String DB_URL= "jdbc:mysql://localhost:3306/couponmanager?useSSL=false&serverTimezone=UTC";
 
 	//DB Server User +password
 	public static final String user ="root";

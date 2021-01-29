@@ -113,8 +113,7 @@ public class CompanyFacade extends ClientFacade {
 	}
 	public Company getCompanyDetails(){
 		return m_companies.getOneCompany(this.m_companyID);
-	}
-	
+	}	
 	public CompanyFacade() {}
 	public CompanyFacade(int companyID)
 	{
