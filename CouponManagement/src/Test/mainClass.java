@@ -14,7 +14,7 @@ public class mainClass {
 	public static void main(String[] args){
 		(new CouponExpiraitionDailyJob()).run();
 		
-		ClearDB.ClearDBTables();
+		//ClearDB.ClearDBTables();
 	
 		LoginManager loginManager  = LoginManager.getInstance();
 
@@ -200,9 +200,9 @@ public class mainClass {
 		@SuppressWarnings("deprecation")
 		java.sql.Date dateExpierd = new java.sql.Date(2022-1920,1-1,1);
 		
-		Coupon coupon = new Coupon(IntelID,Category.Vacation,"AC","Intel from CustomerUserTest ",date,dateEnd,5,3.6,"temp");
-		Coupon coupon2 = new Coupon(IntelID,Category.Food,"AB","Intel from CustomerUserTest->zero amount ",date,dateEnd,0,3.6,"temp");
-		Coupon coupon3 = new Coupon(IntelID,Category.Food,"ABc","Intel from CustomerUserTest->expierd date ",date,dateExpierd,80,3.6,"temp");
+		Coupon coupon = new Coupon(IntelID,Category.Vacation,"Sky Dive","Intel from CustomerUserTest ",date,dateEnd,5,3.6,"temp");
+		Coupon coupon2 = new Coupon(IntelID,Category.Food,"1+1","Intel from CustomerUserTest->zero amount ",date,dateEnd,0,3.6,"temp");
+		Coupon coupon3 = new Coupon(IntelID,Category.Food,"dessert","Intel from CustomerUserTest->expierd date ",date,dateExpierd,80,3.6,"temp");
 		
 		companyFacade.addCoupon(coupon);
 		companyFacade.addCoupon(coupon2);
