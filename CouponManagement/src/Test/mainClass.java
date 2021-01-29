@@ -12,7 +12,7 @@ import java.util.*;
 
 public class mainClass {
 	public static void main(String[] args){
-		//(new CouponExpiraitionDailyJob()).run();
+		(new CouponExpiraitionDailyJob()).run();
 		
 		ClearDB.ClearDBTables();
 	
