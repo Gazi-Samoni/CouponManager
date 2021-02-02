@@ -12,9 +12,9 @@ import java.util.*;
 
 public class mainClass {
 	public static void main(String[] args){
-		(new CouponExpiraitionDailyJob()).run();
+		//(new CouponExpiraitionDailyJob()).run();
 		
-		//ClearDB.ClearDBTables();
+		ClearDB.ClearDBTables();
 	
 		LoginManager loginManager  = LoginManager.getInstance();
 
@@ -51,10 +51,10 @@ public class mainClass {
 		java.sql.Date date = new java.sql.Date(millis);
 		CompanyFacade companyFacade = new CompanyFacade();
 		//create coupons
-		Amdocs.setID(companyFacade.getCompanyIDByName(Amdocs.getEmail(),Amdocs.getPassword()));
+		Amdocs.setID(companyFacade.getCompanyIdByEmailAndPassword(Amdocs.getEmail(),Amdocs.getPassword()));
 		companyFacade.setID(Amdocs.getID());
-		Intel.setID(companyFacade.getCompanyIDByName(Intel.getEmail(),Intel.getPassword()));
-		Microsoft.setID(companyFacade.getCompanyIDByName(Microsoft.getEmail(),Microsoft.getPassword()));
+		Intel.setID(companyFacade.getCompanyIdByEmailAndPassword(Intel.getEmail(),Intel.getPassword()));
+		Microsoft.setID(companyFacade.getCompanyIdByEmailAndPassword(Microsoft.getEmail(),Microsoft.getPassword()));
 		
 		Coupon coupon = new Coupon(Amdocs.getID(),Category.Electricity,"coupon1","test1",date,date,5,3.6,"temp");
 		Coupon coupon2 = new Coupon(Amdocs.getID(),Category.Food,"coupon2","test31",date,date,5,3.6,"temp");
@@ -193,7 +193,7 @@ public class mainClass {
 		System.out.println("------------------Customer Test------------------");
 		
 		CompanyFacade companyFacade = new CompanyFacade();
-		int IntelID = companyFacade.getCompanyIDByName("Intel@Intel.com","1234");
+		int IntelID = companyFacade.getCompanyIdByEmailAndPassword("Intel@Intel.com","1234");
 		companyFacade.setID(IntelID);
 		java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
 		java.sql.Date dateEnd = new java.sql.Date(2022-1900,1-1,1);

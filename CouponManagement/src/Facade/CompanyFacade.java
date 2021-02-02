@@ -125,7 +125,7 @@ public class CompanyFacade extends ClientFacade {
 	public int getCompanyID() {
 		return m_companyID;
 	}
-	public int getCompanyIDByName(String email, String password) {
+	public int getCompanyIdByEmailAndPassword(String email, String password) {
 		return m_companies.getCompanyIdByEmailAndPassword(email, password);
 	}
 }

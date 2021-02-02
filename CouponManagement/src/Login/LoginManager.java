@@ -18,6 +18,7 @@ public class LoginManager {
 		
 		return instance;
 	}
+
 	
 	public ClientFacade login(String email, String password, ClientType clientType)
 	{

@@ -124,8 +124,7 @@ public class CustomersDBDAO implements CustomersDAO {
 		}
 			
 		return costumers;
-	}
-	
+	}	
 	public ArrayList<Coupon> getCustomerCoupons(int customerID){
 		ResultSet customerVScoupon = this.getCustomerVsCouponTableByCutomerID(customerID);
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
@@ -140,8 +139,6 @@ public class CustomersDBDAO implements CustomersDAO {
 		}
 		return coupons;
 	}
-	
-	
 	private Coupon getOneCoupon(int couponID) {
 		Connection connection=null;
 		Coupon coupon = null;
@@ -168,7 +165,6 @@ public class CustomersDBDAO implements CustomersDAO {
 
 		return coupon;
 	}
-	
 	public Customer getOneCustomer(int customerID) {
 		Connection connection=null;
 		String query = "SELECT * FROM couponmanager.customers WHERE (ID = '" + customerID + "');";
@@ -195,7 +191,6 @@ public class CustomersDBDAO implements CustomersDAO {
 			}
 		}
 		
-		//customer.setCoupons();
 		return customer;
 	}
 	public boolean isCustomerEmailExists(String email)
@@ -268,5 +263,4 @@ public class CustomersDBDAO implements CustomersDAO {
 		}
 		return customerID;
 	}
-	
 }

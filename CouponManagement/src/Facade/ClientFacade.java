@@ -14,18 +14,13 @@ public abstract class ClientFacade {
 	}
 	
 	public abstract boolean login(String email,String password);
-	
 	public CompaniesDAO getCompanies() {
 		return m_companies;
 	}
-
-
 	public CouponsDAO getCoupons() {
 		return m_coupons;
 		
 	}
-
-
 	public CustomersDAO getCustomers() {
 		return m_customers;
 	}
